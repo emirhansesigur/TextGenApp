@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Services/" />
+  <Folder Name="/Services/Vocabulary/">
+    <Project Path="Services/Vocabulary/Vocabulary.API/Vocabulary.API.csproj" Id="a734cbe8-40d0-434d-836c-90ed802d0950" />
+    <Project Path="Services/Vocabulary/Vocabulary.Application/Vocabulary.Application.csproj" Id="be2e2c37-7f02-4c89-93d6-aa1beba86032" />
+    <Project Path="Services/Vocabulary/Vocabulary.Core/Vocabulary.Core.csproj" Id="d6c5fdac-031a-4d33-aa1b-fc790fd0dc1c" />
+    <Project Path="Services/Vocabulary/Vocabulary.Infrastructure/Vocabulary.Infrastructure.csproj" Id="69cee38d-3f27-480d-988f-0849dbf73ee8" />
+  </Folder>
+</Solution>
