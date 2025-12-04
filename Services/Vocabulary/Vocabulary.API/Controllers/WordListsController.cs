@@ -1,57 +1,59 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Vocabulary.Application.Services;
+using Vocabulary.Application.Commands;
+using Vocabulary.Application.Queries;
 
 namespace Vocabulary.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class WordListsController : ControllerBase
+public class WordListsController : ApiControllerBase
 {
-    private readonly WordListService _service;
-
-    public WordListsController(WordListService service)
+    [HttpPost]
+    public async Task<IActionResult> CreateWordList([FromBody] CreateWordListCommand command)
     {
-        _service = service;
+        var result = await Mediator.Send(command);
+        return CreatedAtAction(nameof(GetWordList), new { id = result.Id }, result);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateWordListRequest request)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetWordList(Guid id)
     {
-        var result = await _service.CreateAsync(request.UserId, request.Name, request.Level);
+        var query = new GetWordListQuery { Id = id };
+        var result = await Mediator.Send(query);
+        return Ok(result);
+    }
 
+    [HttpGet]
+    public async Task<IActionResult> GetWordLists()
+    {
+        var query = new GetWordListsQuery();
+        var result = await Mediator.Send(query);
         return Ok(result);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateWordListRequest request)
+    public async Task<IActionResult> UpdateWordList(Guid id, [FromBody] UpdateWordListCommand command)
     {
-        var updatedWordList = await _service.UpdateAsync(id, request.Name, request.Level);
+        if (id != command.Id)
+        {
+            return BadRequest("ID in the URL does not match ID in the request body.");
+        }
 
-        return Ok(updatedWordList);
-    }
-
-    [HttpGet("user/{userId}")]
-    public async Task<IActionResult> GetByUser(Guid userId)
-    {
-        var lists = await _service.GetByUserAsync(userId);
-        return Ok(lists);
-    }
-
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get(Guid id)
-    {
-        var list = await _service.GetWithWordsAsync(id);
-        return Ok(list);
+        var result = await Mediator.Send(command);
+        return Ok(result);
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> DeleteWordList(Guid id)
     {
-        await _service.DeleteAsync(id);
-        return Ok(new { Message = "Word list deleted successfully" });
+        var command = new DeleteWordListCommand { Id = id };
+        var result = await Mediator.Send(command);
+
+        if (!result)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
     }
-
 }
-
-public record CreateWordListRequest(Guid UserId, string Name, string? Level);
-public record UpdateWordListRequest(string Name, string? Level);

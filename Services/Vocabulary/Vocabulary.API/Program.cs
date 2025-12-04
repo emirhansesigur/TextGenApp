@@ -1,9 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Vocabulary.Application.Services;
-using Vocabulary.Core.Entities;
-using Vocabulary.Core.Repositories;
+using Vocabulary.Application;
 using Vocabulary.Infrastructure.Data;
-using Vocabulary.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,14 +12,15 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<VocabularyDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Register Repositories
-builder.Services.AddScoped<IGenericRepository<WordList>, GenericRepository<WordList>>();
-builder.Services.AddScoped<IWordListRepository, WordListRepository>();
-
-// Register Services
-builder.Services.AddScoped<WordListService>();
+// MediatR
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(ApplicationAssemblyReference).Assembly);
+});
 
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

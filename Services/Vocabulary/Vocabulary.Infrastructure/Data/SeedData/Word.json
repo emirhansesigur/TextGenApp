@@ -1,0 +1,194 @@
+[
+  {
+    "Id": "10000000-0000-0000-0000-000000000001",
+    "WordListId": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
+    "Text": "hello",
+    "CreatedAt": "2024-01-15T10:05:00Z"
+  },
+  {
+    "Id": "10000000-0000-0000-0000-000000000002",
+    "WordListId": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
+    "Text": "goodbye",
+    "CreatedAt": "2024-01-15T10:06:00Z"
+  },
+  {
+    "Id": "10000000-0000-0000-0000-000000000003",
+    "WordListId": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
+    "Text": "thank you",
+    "CreatedAt": "2024-01-15T10:07:00Z"
+  },
+  {
+    "Id": "10000000-0000-0000-0000-000000000004",
+    "WordListId": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
+    "Text": "please",
+    "CreatedAt": "2024-01-15T10:08:00Z"
+  },
+  {
+    "Id": "10000000-0000-0000-0000-000000000005",
+    "WordListId": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
+    "Text": "yes",
+    "CreatedAt": "2024-01-15T10:09:00Z"
+  },
+  {
+    "Id": "20000000-0000-0000-0000-000000000001",
+    "WordListId": "b2c3d4e5-f6a7-4b5c-9d0e-1f2a3b4c5d6e",
+    "Text": "family",
+    "CreatedAt": "2024-01-20T10:05:00Z"
+  },
+  {
+    "Id": "20000000-0000-0000-0000-000000000002",
+    "WordListId": "b2c3d4e5-f6a7-4b5c-9d0e-1f2a3b4c5d6e",
+    "Text": "friend",
+    "CreatedAt": "2024-01-20T10:06:00Z"
+  },
+  {
+    "Id": "20000000-0000-0000-0000-000000000003",
+    "WordListId": "b2c3d4e5-f6a7-4b5c-9d0e-1f2a3b4c5d6e",
+    "Text": "house",
+    "CreatedAt": "2024-01-20T10:07:00Z"
+  },
+  {
+    "Id": "20000000-0000-0000-0000-000000000004",
+    "WordListId": "b2c3d4e5-f6a7-4b5c-9d0e-1f2a3b4c5d6e",
+    "Text": "school",
+    "CreatedAt": "2024-01-20T10:08:00Z"
+  },
+  {
+    "Id": "20000000-0000-0000-0000-000000000005",
+    "WordListId": "b2c3d4e5-f6a7-4b5c-9d0e-1f2a3b4c5d6e",
+    "Text": "food",
+    "CreatedAt": "2024-01-20T10:09:00Z"
+  },
+  {
+    "Id": "30000000-0000-0000-0000-000000000001",
+    "WordListId": "c3d4e5f6-a7b8-4c5d-0e1f-2a3b4c5d6e7f",
+    "Text": "although",
+    "CreatedAt": "2024-02-01T10:05:00Z"
+  },
+  {
+    "Id": "30000000-0000-0000-0000-000000000002",
+    "WordListId": "c3d4e5f6-a7b8-4c5d-0e1f-2a3b4c5d6e7f",
+    "Text": "however",
+    "CreatedAt": "2024-02-01T10:06:00Z"
+  },
+  {
+    "Id": "30000000-0000-0000-0000-000000000003",
+    "WordListId": "c3d4e5f6-a7b8-4c5d-0e1f-2a3b4c5d6e7f",
+    "Text": "therefore",
+    "CreatedAt": "2024-02-01T10:07:00Z"
+  },
+  {
+    "Id": "30000000-0000-0000-0000-000000000004",
+    "WordListId": "c3d4e5f6-a7b8-4c5d-0e1f-2a3b4c5d6e7f",
+    "Text": "furthermore",
+    "CreatedAt": "2024-02-01T10:08:00Z"
+  },
+  {
+    "Id": "40000000-0000-0000-0000-000000000001",
+    "WordListId": "d4e5f6a7-b8c9-4d5e-1f2a-3b4c5d6e7f8a",
+    "Text": "nevertheless",
+    "CreatedAt": "2024-02-10T10:05:00Z"
+  },
+  {
+    "Id": "40000000-0000-0000-0000-000000000002",
+    "WordListId": "d4e5f6a7-b8c9-4d5e-1f2a-3b4c5d6e7f8a",
+    "Text": "consequently",
+    "CreatedAt": "2024-02-10T10:06:00Z"
+  },
+  {
+    "Id": "40000000-0000-0000-0000-000000000003",
+    "WordListId": "d4e5f6a7-b8c9-4d5e-1f2a-3b4c5d6e7f8a",
+    "Text": "substantially",
+    "CreatedAt": "2024-02-10T10:07:00Z"
+  },
+  {
+    "Id": "40000000-0000-0000-0000-000000000004",
+    "WordListId": "d4e5f6a7-b8c9-4d5e-1f2a-3b4c5d6e7f8a",
+    "Text": "demonstrate",
+    "CreatedAt": "2024-02-10T10:08:00Z"
+  },
+  {
+    "Id": "50000000-0000-0000-0000-000000000001",
+    "WordListId": "e5f6a7b8-c9d0-4e5f-2a3b-4c5d6e7f8a9b",
+    "Text": "unequivocal",
+    "CreatedAt": "2024-02-20T10:05:00Z"
+  },
+  {
+    "Id": "50000000-0000-0000-0000-000000000002",
+    "WordListId": "e5f6a7b8-c9d0-4e5f-2a3b-4c5d6e7f8a9b",
+    "Text": "juxtaposition",
+    "CreatedAt": "2024-02-20T10:06:00Z"
+  },
+  {
+    "Id": "50000000-0000-0000-0000-000000000003",
+    "WordListId": "e5f6a7b8-c9d0-4e5f-2a3b-4c5d6e7f8a9b",
+    "Text": "paradigm",
+    "CreatedAt": "2024-02-20T10:07:00Z"
+  },
+  {
+    "Id": "50000000-0000-0000-0000-000000000004",
+    "WordListId": "e5f6a7b8-c9d0-4e5f-2a3b-4c5d6e7f8a9b",
+    "Text": "ubiquitous",
+    "CreatedAt": "2024-02-20T10:08:00Z"
+  },
+  {
+    "Id": "60000000-0000-0000-0000-000000000001",
+    "WordListId": "f6a7b8c9-d0e1-4f5a-3b4c-5d6e7f8a9b0c",
+    "Text": "stakeholder",
+    "CreatedAt": "2024-03-01T10:05:00Z"
+  },
+  {
+    "Id": "60000000-0000-0000-0000-000000000002",
+    "WordListId": "f6a7b8c9-d0e1-4f5a-3b4c-5d6e7f8a9b0c",
+    "Text": "synergy",
+    "CreatedAt": "2024-03-01T10:06:00Z"
+  },
+  {
+    "Id": "60000000-0000-0000-0000-000000000003",
+    "WordListId": "f6a7b8c9-d0e1-4f5a-3b4c-5d6e7f8a9b0c",
+    "Text": "leverage",
+    "CreatedAt": "2024-03-01T10:07:00Z"
+  },
+  {
+    "Id": "60000000-0000-0000-0000-000000000004",
+    "WordListId": "f6a7b8c9-d0e1-4f5a-3b4c-5d6e7f8a9b0c",
+    "Text": "quarterly",
+    "CreatedAt": "2024-03-01T10:08:00Z"
+  },
+  {
+    "Id": "60000000-0000-0000-0000-000000000005",
+    "WordListId": "f6a7b8c9-d0e1-4f5a-3b4c-5d6e7f8a9b0c",
+    "Text": "revenue",
+    "CreatedAt": "2024-03-01T10:09:00Z"
+  },
+  {
+    "Id": "70000000-0000-0000-0000-000000000001",
+    "WordListId": "a7b8c9d0-e1f2-4a5b-4c5d-6e7f8a9b0c1d",
+    "Text": "airport",
+    "CreatedAt": "2024-03-10T10:05:00Z"
+  },
+  {
+    "Id": "70000000-0000-0000-0000-000000000002",
+    "WordListId": "a7b8c9d0-e1f2-4a5b-4c5d-6e7f8a9b0c1d",
+    "Text": "ticket",
+    "CreatedAt": "2024-03-10T10:06:00Z"
+  },
+  {
+    "Id": "70000000-0000-0000-0000-000000000003",
+    "WordListId": "a7b8c9d0-e1f2-4a5b-4c5d-6e7f8a9b0c1d",
+    "Text": "passport",
+    "CreatedAt": "2024-03-10T10:07:00Z"
+  },
+  {
+    "Id": "70000000-0000-0000-0000-000000000004",
+    "WordListId": "a7b8c9d0-e1f2-4a5b-4c5d-6e7f8a9b0c1d",
+    "Text": "hotel",
+    "CreatedAt": "2024-03-10T10:08:00Z"
+  },
+  {
+    "Id": "70000000-0000-0000-0000-000000000005",
+    "WordListId": "a7b8c9d0-e1f2-4a5b-4c5d-6e7f8a9b0c1d",
+    "Text": "reservation",
+    "CreatedAt": "2024-03-10T10:09:00Z"
+  }
+]
