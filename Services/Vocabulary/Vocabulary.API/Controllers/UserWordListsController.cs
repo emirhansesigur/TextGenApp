@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Vocabulary.Application.Commands.UserWordLists;
-using Vocabulary.Application.Queries;
+using Vocabulary.Application.Queries.UserWordLists;
 
 namespace Vocabulary.API.Controllers;
 

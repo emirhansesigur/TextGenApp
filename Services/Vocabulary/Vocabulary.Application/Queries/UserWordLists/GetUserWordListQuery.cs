@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Vocabulary.Application.Models;
 using Vocabulary.Infrastructure.Data;
 
-namespace Vocabulary.Application.Queries;
+namespace Vocabulary.Application.Queries.UserWordLists;
 
 public class GetUserWordListQuery : IRequest<UserWordListResponseModel>
 {

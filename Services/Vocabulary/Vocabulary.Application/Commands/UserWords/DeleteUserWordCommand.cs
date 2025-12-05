@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Vocabulary.Core.Entities;
 using Vocabulary.Infrastructure.Data;
 
 namespace Vocabulary.Application.Commands.UserWords;
@@ -16,18 +17,17 @@ public class DeleteUserWordCommandHandler(VocabularyDbContext _dbContext) : IReq
 {
     public async Task<bool> Handle(DeleteUserWordCommand request, CancellationToken cancellationToken)
     {
-        //var userWord = await _dbContext.UserWords
-        //    .FirstOrDefaultAsync(w => w.Id == request.Id, cancellationToken);
+        var userWord = await _dbContext.UserWords
+            .FirstOrDefaultAsync(w => w.Id == request.Id, cancellationToken);
 
-        //if (userWord == null)
-        //{
-        //    return false;
-        //}
+        if (userWord == null)
+        {
+            return false;
+        }
 
-        //_dbContext.UserWords.Remove(userWord);
-        //await _dbContext.SaveChangesAsync(cancellationToken);
+        _dbContext.UserWords.Remove(userWord);
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
-        //return true;
-        throw new NotImplementedException();
+        return true;
     }
 }

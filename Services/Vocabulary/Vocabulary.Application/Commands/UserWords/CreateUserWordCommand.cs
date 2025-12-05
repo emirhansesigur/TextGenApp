@@ -17,18 +17,17 @@ public class CreateUserWordCommandHandler(VocabularyDbContext _dbContext) : IReq
 {
     public async Task<UserWord> Handle(CreateUserWordCommand request, CancellationToken cancellationToken)
     {
-        //var userWord = new UserWord
-        //{
-        //    Id = Guid.NewGuid(),
-        //    UserWordListId = request.UserWordListId,
-        //    Text = request.Text,
-        //    Meaning = request.Meaning
-        //};
+        var userWord = new UserWord
+        {
+            Id = Guid.NewGuid(),
+            UserWordListId = request.UserWordListId,
+            Text = request.Text,
+            Meaning = request.Meaning
+        };
 
-        //_dbContext.UserWords.Add(userWord);
-        //await _dbContext.SaveChangesAsync(cancellationToken);
+        _dbContext.UserWords.Add(userWord);
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
-        //return userWord;
-      throw new NotImplementedException();
+        return userWord;
     }
 }

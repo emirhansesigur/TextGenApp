@@ -18,20 +18,19 @@ public class UpdateUserWordCommandHandler (VocabularyDbContext _dbContext) : IRe
 {
     public async Task<UserWord> Handle(UpdateUserWordCommand request, CancellationToken cancellationToken)
     {
-        //var userWord = await _dbContext.UserWords
-        //    .FirstOrDefaultAsync(w => w.Id == request.Id, cancellationToken);
+        var userWord = await _dbContext.UserWords
+            .FirstOrDefaultAsync(w => w.Id == request.Id, cancellationToken);
 
-        //if (userWord == null)
-        //{
-        //    throw new KeyNotFoundException($"UserWord with Id {request.Id} not found.");
-        //}
+        if (userWord == null)
+        {
+            throw new KeyNotFoundException($"UserWord with Id {request.Id} not found.");
+        }
 
-        //userWord.Text = request.Text;
-        //userWord.Meaning = request.Meaning;
+        userWord.Text = request.Text;
+        userWord.Meaning = request.Meaning;
 
-        //await _dbContext.SaveChangesAsync(cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
-        //return userWord;
-        throw new NotImplementedException();
+        return userWord;
     }
 }
