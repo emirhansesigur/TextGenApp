@@ -15,8 +15,4 @@
     <ProjectReference Include="..\Vocabulary.Core\Vocabulary.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\SeedData\" />
-  </ItemGroup>
-
 </Project>

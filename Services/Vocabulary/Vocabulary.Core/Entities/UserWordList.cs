@@ -4,8 +4,7 @@ using System.Text;
 
 namespace Vocabulary.Core.Entities;
 
-
-public class WordList : BaseEntity
+public class UserWordList : BaseEntity
 {
     public Guid UserId { get; set; }
 
@@ -13,5 +12,5 @@ public class WordList : BaseEntity
 
     public string? Level { get; set; } 
 
-    public List<Word> Words { get; set; } = new();
+    public List<UserWord> UserWords { get; set; } = new();
 }

@@ -10,15 +10,15 @@ public class VocabularyDbContext : DbContext
     {
     }
 
-    public DbSet<WordList> WordLists => Set<WordList>();
-    public DbSet<Word> Words => Set<Word>();
+    public DbSet<UserWordList> UserWordLists => Set<UserWordList>();
+    public DbSet<UserWord> UserWords => Set<UserWord>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<WordList>()
-            .HasMany(x => x.Words)
+        modelBuilder.Entity<UserWordList>()
+            .HasMany(x => x.UserWords)
             .WithOne()
-            .HasForeignKey(x => x.WordListId)
+            .HasForeignKey(x => x.UserWordListId)
             .OnDelete(DeleteBehavior.Cascade);
 
         base.OnModelCreating(modelBuilder);

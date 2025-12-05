@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Vocabulary.Infrastructure.Data;
@@ -11,9 +12,11 @@ using Vocabulary.Infrastructure.Data;
 namespace Vocabulary.Infrastructure.Migrations
 {
     [DbContext(typeof(VocabularyDbContext))]
-    partial class VocabularyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251205151757_UserWordList_And_UserWord_Class_Name_Updated")]
+    partial class UserWordList_And_UserWord_Class_Name_Updated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +48,7 @@ namespace Vocabulary.Infrastructure.Migrations
 
                     b.HasIndex("UserWordListId");
 
-                    b.ToTable("UserWords");
+                    b.ToTable("Words");
                 });
 
             modelBuilder.Entity("Vocabulary.Core.Entities.UserWordList", b =>

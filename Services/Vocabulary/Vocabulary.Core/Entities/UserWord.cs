@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Vocabulary.Core.Entities;
 
-public class Word : BaseEntity
+public class UserWord : BaseEntity
 {
-    public Guid WordListId { get; set; }
+    public Guid UserWordListId { get; set; }
     public string Text { get; set; } = default!;
+    public string? Meaning { get; set; }
 }

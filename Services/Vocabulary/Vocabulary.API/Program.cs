@@ -12,7 +12,6 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<VocabularyDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// MediatR
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(ApplicationAssemblyReference).Assembly);
@@ -30,8 +29,6 @@ if (app.Environment.IsDevelopment())
     //{
     //    options.SwaggerEndpoint("/openapi/v1.json", "My App");
     //});
-
-
 }
 
 app.UseAuthorization();

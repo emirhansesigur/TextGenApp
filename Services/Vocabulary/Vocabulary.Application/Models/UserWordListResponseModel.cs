@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Vocabulary.Application.Models;
 
-public class WordListRequestModel
+public class UserWordListResponseModel
 {
     public Guid Id { get; set; }
+    public Guid UserId { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Level { get; set; } = string.Empty;
-    public Guid UserId { get; set; }
-    public List<WordRequestModel> Words { get; set; } = new();
+    public List<UserWordResponseModel> Words { get; set; } = new();
 }
