@@ -10,7 +10,6 @@ namespace Vocabulary.Application.Commands.UserWords;
 
 public class CreateUserWordCommand : UserWordRequestModel, IRequest<UserWord>
 {
-    public Guid UserWordListId { get; set; }
 }
 
 public class CreateUserWordCommandHandler(VocabularyDbContext _dbContext) : IRequestHandler<CreateUserWordCommand, UserWord>
@@ -20,7 +19,7 @@ public class CreateUserWordCommandHandler(VocabularyDbContext _dbContext) : IReq
         var userWord = new UserWord
         {
             Id = Guid.NewGuid(),
-            UserWordListId = request.UserWordListId,
+            UserWordListId = request.UserWordListId, // Validation needed
             Text = request.Text,
             Meaning = request.Meaning
         };

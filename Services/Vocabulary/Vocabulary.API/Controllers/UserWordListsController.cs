@@ -23,7 +23,7 @@ public class UserWordListsController : ApiControllerBase
         return Ok(result);
     }
 
-    [HttpGet("user")]
+    [HttpGet("ByUser")]
     public async Task<IActionResult> GetUserWordListsByUser()
     {
         var query = new GetUserWordListsByUserQuery();

@@ -39,8 +39,8 @@ public class GetUserWordListQueryHandler : IRequestHandler<GetUserWordListQuery,
             Words = userWordList.UserWords.Select(word => new UserWordResponseModel
             {
                 Id = word.Id,
-                Text = word.Text
-
+                Text = word.Text,
+                Meaning = word.Meaning
             }).ToList()
         };
     }

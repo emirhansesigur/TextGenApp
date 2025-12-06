@@ -26,6 +26,7 @@ public class UpdateUserWordCommandHandler (VocabularyDbContext _dbContext) : IRe
             throw new KeyNotFoundException($"UserWord with Id {request.Id} not found.");
         }
 
+        userWord.UserWordListId = request.UserWordListId;
         userWord.Text = request.Text;
         userWord.Meaning = request.Meaning;
 
