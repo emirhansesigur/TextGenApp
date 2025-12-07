@@ -1,8 +1,19 @@
+using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using Vocabulary.Application;
 using Vocabulary.Infrastructure.Data;
 
+Env.Load();
+
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new Exception(".env dosyasından connection string okunamadı!");
+}
+// Console.WriteLine($"Connection String: {connectionString}"); // Test için
 
 builder.Services.AddControllers();
 
@@ -10,7 +21,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<VocabularyDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddMediatR(cfg =>
 {
