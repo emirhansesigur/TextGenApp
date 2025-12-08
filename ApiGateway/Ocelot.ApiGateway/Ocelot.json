@@ -1,0 +1,40 @@
+{
+  "Routes": [
+    {
+      // --- 1. VOCABULARY SERVİSİ ---
+      // Gateway'e gelen "/gateway/vocabulary/..." isteğini yakalar
+      "UpstreamPathTemplate": "/gateway/vocabulary/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+
+      // İsteği asıl servisin olduğu "/api/..." adresine yönlendirir
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ]
+    },
+    {
+      // --- 2. TEXTGEN SERVİSİ ---
+      // Gateway'e gelen "/gateway/textgen/..." isteğini yakalar
+      "UpstreamPathTemplate": "/gateway/textgen/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+
+      // İsteği asıl servisin olduğu "/api/..." adresine yönlendirir
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002  
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    // Gateway projenin çalışacağı adres (launchSettings.json ile aynı olmalı)
+    "BaseUrl": "http://localhost:8000"
+  }
+}

@@ -1,5 +1,11 @@
 <Solution>
+  <Folder Name="/ApiGateway/">
+    <Project Path="ApiGateway/Ocelot.ApiGateway/Ocelot.ApiGateway.csproj" Id="9ecb55b6-4270-4711-8e85-2b522285c011" />
+  </Folder>
   <Folder Name="/Services/" />
+  <Folder Name="/Services/TextGen/">
+    <Project Path="Services/TextGen/TextGen.API/TextGen.API.csproj" Id="b5430710-fd5c-49bf-9993-20a68e24e54e" />
+  </Folder>
   <Folder Name="/Services/Vocabulary/">
     <Project Path="Services/Vocabulary/Vocabulary.API/Vocabulary.API.csproj" Id="a734cbe8-40d0-434d-836c-90ed802d0950" />
     <Project Path="Services/Vocabulary/Vocabulary.Application/Vocabulary.Application.csproj" Id="be2e2c37-7f02-4c89-93d6-aa1beba86032" />
