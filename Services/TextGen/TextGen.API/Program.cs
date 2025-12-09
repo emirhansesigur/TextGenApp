@@ -1,6 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+//var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
 
 //if (string.IsNullOrEmpty(connectionString))
 //{

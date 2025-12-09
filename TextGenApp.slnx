@@ -5,6 +5,9 @@
   <Folder Name="/Services/" />
   <Folder Name="/Services/TextGen/">
     <Project Path="Services/TextGen/TextGen.API/TextGen.API.csproj" Id="b5430710-fd5c-49bf-9993-20a68e24e54e" />
+    <Project Path="Services/TextGen/TextGen.Application/TextGen.Application.csproj" Id="ffc168db-d9f3-468c-a1b0-7817de3b3f03" />
+    <Project Path="Services/TextGen/TextGen.Core/TextGen.Core.csproj" Id="0322bf74-4e17-47df-98ef-cb44e9e2f991" />
+    <Project Path="Services/TextGen/TextGen.Infrastructure/TextGen.Infrastructure.csproj" Id="8685e8ea-c803-430f-8b4b-23662bb9c06a" />
   </Folder>
   <Folder Name="/Services/Vocabulary/">
     <Project Path="Services/Vocabulary/Vocabulary.API/Vocabulary.API.csproj" Id="a734cbe8-40d0-434d-836c-90ed802d0950" />
