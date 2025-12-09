@@ -12,11 +12,12 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="14.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Vocabulary\Vocabulary.Core\Vocabulary.Core.csproj" />
     <ProjectReference Include="..\TextGen.Core\TextGen.Core.csproj" />
-    <ProjectReference Include="..\TextGen.Infrastructure\TextGen.Infrastructure.csproj" />
   </ItemGroup>
 
 

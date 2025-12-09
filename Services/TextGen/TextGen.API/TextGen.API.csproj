@@ -10,4 +10,9 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TextGen.Application\TextGen.Application.csproj" />
+    <ProjectReference Include="..\TextGen.Infrastructure\TextGen.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

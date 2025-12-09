@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Vocabulary.Application.Interfaces;
 using Vocabulary.Application.Models;
 using Vocabulary.Core.Entities;
-using Vocabulary.Infrastructure.Data;
 
 namespace Vocabulary.Application.Commands.UserWordLists;
 
@@ -13,7 +13,7 @@ public class CreateUserWordListCommand : UserWordListRequestModel, IRequest<User
 {
 
 }
-public class CreateWordListCommandHandler(VocabularyDbContext _dbContext) : IRequestHandler<CreateUserWordListCommand, UserWordList>
+public class CreateWordListCommandHandler(IVocabularyDbContext _dbContext) : IRequestHandler<CreateUserWordListCommand, UserWordList>
 {
     public async Task<UserWordList> Handle(CreateUserWordListCommand request, CancellationToken cancellationToken)
     {

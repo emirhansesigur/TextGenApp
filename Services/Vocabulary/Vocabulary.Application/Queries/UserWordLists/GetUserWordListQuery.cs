@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Vocabulary.Application.Interfaces;
 using Vocabulary.Application.Models;
-using Vocabulary.Infrastructure.Data;
 
 namespace Vocabulary.Application.Queries.UserWordLists;
 
@@ -10,15 +10,8 @@ public class GetUserWordListQuery : IRequest<UserWordListResponseModel>
     public Guid Id { get; set; }
 }
 
-public class GetUserWordListQueryHandler : IRequestHandler<GetUserWordListQuery, UserWordListResponseModel>
+public class GetUserWordListQueryHandler(IVocabularyDbContext _dbContext) : IRequestHandler<GetUserWordListQuery, UserWordListResponseModel>
 {
-    private readonly VocabularyDbContext _dbContext;
-
-    public GetUserWordListQueryHandler(VocabularyDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public async Task<UserWordListResponseModel> Handle(GetUserWordListQuery request, CancellationToken cancellationToken)
     {
         var userWordList = await _dbContext.UserWordLists

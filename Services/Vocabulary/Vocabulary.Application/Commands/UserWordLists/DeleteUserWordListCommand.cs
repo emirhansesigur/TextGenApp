@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Vocabulary.Infrastructure.Data;
+using Vocabulary.Application.Interfaces;
 
 namespace Vocabulary.Application.Commands.UserWordLists;
 
@@ -9,7 +9,7 @@ public class DeleteUserWordListCommand : IRequest<bool>
     public Guid Id { get; set; }
 }
 
-public class DeleteUserWordListCommandHandler(VocabularyDbContext _dbContext) : IRequestHandler<DeleteUserWordListCommand, bool>
+public class DeleteUserWordListCommandHandler(IVocabularyDbContext _dbContext) : IRequestHandler<DeleteUserWordListCommand, bool>
 {
     public async Task<bool> Handle(DeleteUserWordListCommand request, CancellationToken cancellationToken)
     {

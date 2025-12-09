@@ -1,6 +1,7 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using Vocabulary.Application;
+using Vocabulary.Application.Interfaces;
 using Vocabulary.Infrastructure.Data;
 
 Env.Load();
@@ -22,6 +23,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<VocabularyDbContext>(options =>
     options.UseNpgsql(connectionString));
+
+builder.Services.AddScoped<IVocabularyDbContext>(provider =>
+    provider.GetRequiredService<VocabularyDbContext>());
 
 builder.Services.AddMediatR(cfg =>
 {

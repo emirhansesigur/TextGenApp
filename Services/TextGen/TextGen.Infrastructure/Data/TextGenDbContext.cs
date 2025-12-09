@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TextGen.Application.Interfaces;
 using TextGen.Core.Entities;
 
-public class TextGenDbContext : DbContext
+namespace TextGen.Infrastructure.Data;
+
+public class TextGenDbContext : DbContext, ITextGenDbContext
 {
     public TextGenDbContext(DbContextOptions<TextGenDbContext> options)
         : base(options)

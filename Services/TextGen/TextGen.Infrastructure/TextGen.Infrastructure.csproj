@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TextGen.Application\TextGen.Application.csproj" />
     <ProjectReference Include="..\TextGen.Core\TextGen.Core.csproj" />
   </ItemGroup>
 

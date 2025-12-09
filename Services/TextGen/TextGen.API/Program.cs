@@ -1,3 +1,6 @@
+using TextGen.Application.Interfaces;
+using TextGen.Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 //var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
@@ -11,6 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddScoped<ITextGenDbContext>(provider =>
+    provider.GetRequiredService<TextGenDbContext>());
 
 var app = builder.Build();
 

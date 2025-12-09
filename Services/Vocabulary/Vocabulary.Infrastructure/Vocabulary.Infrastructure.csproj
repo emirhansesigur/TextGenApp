@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Vocabulary.Application\Vocabulary.Application.csproj" />
     <ProjectReference Include="..\Vocabulary.Core\Vocabulary.Core.csproj" />
   </ItemGroup>
 

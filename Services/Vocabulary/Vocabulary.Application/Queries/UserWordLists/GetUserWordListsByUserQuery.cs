@@ -5,8 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Vocabulary.Application.Interfaces;
 using Vocabulary.Application.Models;
-using Vocabulary.Infrastructure.Data;
 
 namespace Vocabulary.Application.Queries.UserWordLists;
 
@@ -14,15 +14,8 @@ public class GetUserWordListsByUserQuery : IRequest<List<UserWordListResponseMod
 {
 }
 
-public class GetUserWordListsByUserQueryHandler : IRequestHandler<GetUserWordListsByUserQuery, List<UserWordListResponseModel>>
+public class GetUserWordListsByUserQueryHandler(IVocabularyDbContext _dbContext) : IRequestHandler<GetUserWordListsByUserQuery, List<UserWordListResponseModel>>
 {
-    private readonly VocabularyDbContext _dbContext;
-
-    public GetUserWordListsByUserQueryHandler(VocabularyDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public async Task<List<UserWordListResponseModel>> Handle(GetUserWordListsByUserQuery request, CancellationToken cancellationToken)
     {
         var userIdFromAuth = Guid.Parse("00000000-0000-0000-0000-000000000001");

@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Vocabulary.Core.Entities;
+using Vocabulary.Application.Interfaces;
 
 namespace Vocabulary.Infrastructure.Data;
 
-public class VocabularyDbContext : DbContext
+public class VocabularyDbContext : DbContext, IVocabularyDbContext
 {
     public VocabularyDbContext(DbContextOptions<VocabularyDbContext> options)
         : base(options)

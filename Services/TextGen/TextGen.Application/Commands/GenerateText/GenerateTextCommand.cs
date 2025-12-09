@@ -1,7 +1,7 @@
 ﻿using MediatR;
+using TextGen.Application.Interfaces;
 using TextGen.Application.Models;
 using TextGen.Application.Services;
-using TextGen.Core.Entities;
 
 namespace TextGen.Application.Commands.GenerateText;
 
@@ -10,7 +10,7 @@ public class GenerateTextCommand : TextGenerationRequestModel, IRequest<Generate
 
 }
 
-public class GenerateTextCommandHandler(TextGenDbContext textGenDb, ILlmClient llmClient, PromptBuilder promptBuilder) : IRequestHandler<GenerateTextCommand, GenerateTextResult>
+public class GenerateTextCommandHandler(ITextGenDbContext textGenDb, ILlmClient llmClient, PromptBuilder promptBuilder) : IRequestHandler<GenerateTextCommand, GenerateTextResult>
 {
     public async Task<GenerateTextResult> Handle(GenerateTextCommand request, CancellationToken cancellationToken)
     {

@@ -2,9 +2,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Vocabulary.Application.Interfaces;
 using Vocabulary.Application.Models;
 using Vocabulary.Core.Entities;
-using Vocabulary.Infrastructure.Data;
 
 namespace Vocabulary.Application.Commands.UserWords;
 
@@ -12,7 +12,7 @@ public class CreateUserWordCommand : UserWordRequestModel, IRequest<UserWord>
 {
 }
 
-public class CreateUserWordCommandHandler(VocabularyDbContext _dbContext) : IRequestHandler<CreateUserWordCommand, UserWord>
+public class CreateUserWordCommandHandler(IVocabularyDbContext _dbContext) : IRequestHandler<CreateUserWordCommand, UserWord>
 {
     public async Task<UserWord> Handle(CreateUserWordCommand request, CancellationToken cancellationToken)
     {

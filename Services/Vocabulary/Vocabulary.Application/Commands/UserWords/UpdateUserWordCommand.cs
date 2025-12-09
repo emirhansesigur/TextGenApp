@@ -1,11 +1,8 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
+using Vocabulary.Application.Interfaces;
 using Vocabulary.Application.Models;
 using Vocabulary.Core.Entities;
-using Vocabulary.Infrastructure.Data;
 
 namespace Vocabulary.Application.Commands.UserWords;
 
@@ -14,7 +11,7 @@ public class UpdateUserWordCommand : UserWordRequestModel, IRequest<UserWord>
     public Guid Id { get; set; }
 }
 
-public class UpdateUserWordCommandHandler (VocabularyDbContext _dbContext) : IRequestHandler<UpdateUserWordCommand, UserWord>
+public class UpdateUserWordCommandHandler (IVocabularyDbContext _dbContext) : IRequestHandler<UpdateUserWordCommand, UserWord>
 {
     public async Task<UserWord> Handle(UpdateUserWordCommand request, CancellationToken cancellationToken)
     {
