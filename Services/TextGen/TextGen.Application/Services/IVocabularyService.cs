@@ -8,5 +8,5 @@ namespace TextGen.Application.Services;
 public interface IVocabularyService
 {
     // Metot ismini ihtiyacına göre düzenle
-    Task<List<UserWordListDto>> GetUserWordListsAsync(string userId);
+    Task<List<UserWordListDto>> GetUserWordListsAsync();
 }

@@ -6,7 +6,7 @@ namespace TextGen.Application.Models.DataTransfer;
 
 public class UserWordListDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Title { get; set; }
     public List<string> Words { get; set; }
 }

@@ -1,4 +1,6 @@
-﻿namespace TextGen.Application.Services;
+﻿using TextGen.Application.Models.DataTransfer;
+
+namespace TextGen.Application.Services;
 
 public class PromptBuilder
 {
@@ -8,13 +10,18 @@ public class PromptBuilder
     private int _minWordCount;
     private int _maxWordCount;
 
-    public PromptBuilder WithWords(IEnumerable<string> words)
-    {
-        if (words != null)
-            _words = words.ToList();
+    //public PromptBuilder WithWords(IEnumerable<UserWordListDto> wordLists)
+    //{
+    //    if (wordLists != null)
+    //    {
+    //        // Use SelectMany to flatten the List<List<string>> into a single List<string>
+    //        _words = wordLists
+    //            .SelectMany(dto => dto.Words) // Extracts all inner List<string> from all DTOs
+    //            .ToList();
+    //    }
 
-        return this;
-    }
+    //    return this;
+    //}
 
     public PromptBuilder WithLevel(string level)
     {
@@ -64,4 +71,6 @@ public class PromptBuilder
                 Only output valid JSON. No explanations.
                 ";
     }
+
+
 }
