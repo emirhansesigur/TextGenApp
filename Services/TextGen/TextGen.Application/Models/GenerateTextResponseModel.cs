@@ -1,6 +1,6 @@
 ﻿namespace TextGen.Application.Models;
 
-public class GenerateTextResult
+public class GenerateTextResponseModel
 {
     public string Title { get; set; } = null!;
     public string Content { get; set; } = null!;

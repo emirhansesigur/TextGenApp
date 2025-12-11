@@ -6,14 +6,14 @@ using TextGen.Core.Entities;
 
 namespace TextGen.Application.Commands.GenerateText;
 
-public class GenerateTextCommand : TextGenerationRequestModel, IRequest<GenerateTextResult>
+public class GenerateTextCommand : TextGenerationRequestModel, IRequest<GenerateTextResponseModel>
 {
 }
 
 public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabularyService _vocabularyService,
-    ILlmClient _llmClient, PromptBuilder _promptBuilder) : IRequestHandler<GenerateTextCommand, GenerateTextResult>
+    ILlmClient _llmClient, PromptBuilder _promptBuilder) : IRequestHandler<GenerateTextCommand, GenerateTextResponseModel>
 {
-    public async Task<GenerateTextResult> Handle(GenerateTextCommand request, CancellationToken cancellationToken)
+    public async Task<GenerateTextResponseModel> Handle(GenerateTextCommand request, CancellationToken cancellationToken)
     {
         // 1. Kullanıcının kelime listesini getir
         var userIdFromAuth = Guid.Parse("00000000-0000-0000-0000-000000000001");
@@ -24,7 +24,6 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
         //    throw new Exception("Bu listeye ait kelime bulunamadı.");
 
         //var allWords = wordListDtos.SelectMany(dto => dto.Words).Distinct().ToList();
-
 
         // 2. Prompt oluşturma
         
@@ -67,7 +66,7 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         // 6. Kullanıcıya dönüş
-        return new GenerateTextResult
+        return new GenerateTextResponseModel
         {
             Title = llmResponse.Title,
             Content = llmResponse.Content,
