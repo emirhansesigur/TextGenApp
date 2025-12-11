@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using TextGen.Application.Interfaces;
 using TextGen.Application.Services;
 using TextGen.Infrastructure.Data;
 using TextGen.Infrastructure.Services;

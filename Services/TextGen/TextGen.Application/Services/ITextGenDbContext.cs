@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TextGen.Core.Entities;
 
-namespace TextGen.Application.Interfaces;
+namespace TextGen.Application.Services;
 
 public interface ITextGenDbContext
 {

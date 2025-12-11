@@ -2,5 +2,5 @@
 namespace TextGen.Application.Services;
 public interface ILlmClient
 {
-    Task<LlmTextResponse> GenerateTextAsync(string prompt, CancellationToken cancellationToken);
+    Task<LlmTextResponseModel> GenerateTextAsync(string prompt, CancellationToken cancellationToken);
 }

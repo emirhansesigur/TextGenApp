@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using TextGen.Application.Interfaces;
 using TextGen.Application.Models;
 using TextGen.Application.Services;
 using TextGen.Core.Entities;
@@ -18,7 +17,7 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
         // 1. Kullanıcının kelime listesini getir
         var userIdFromAuth = Guid.Parse("00000000-0000-0000-0000-000000000001");
 
-        //var wordListDtos = await _vocabularyService.GetUserWordListsAsync();
+        var UserWordDtos = await _vocabularyService.GetUserWordAsync(request.UserWordListId);
 
         //if (wordListDtos == null || !wordListDtos.Any())
         //    throw new Exception("Bu listeye ait kelime bulunamadı.");

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TextGen.Application.Models.DataTransfer;
+﻿namespace TextGen.Application.Models.DataTransfer;
 
 public class UserWordListDto
 {
     public Guid Id { get; set; }
-    public string Title { get; set; }
-    public List<string> Words { get; set; }
+    public Guid UserId { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Level { get; set; } = string.Empty;
+    public List<UserWordDto> Words { get; set; } = new();
 }

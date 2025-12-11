@@ -8,10 +8,10 @@ namespace TextGen.Infrastructure.Services;
 
 public class LlmClient : ILlmClient
 {
-    public async Task<LlmTextResponse> GenerateTextAsync(string prompt, CancellationToken cancellationToken)
+    public async Task<LlmTextResponseModel> GenerateTextAsync(string prompt, CancellationToken cancellationToken)
     {
         // 1. Gerçekçi olması için sunucu gecikmesi simülasyonu (1.5 saniye)
-        await Task.Delay(1500, cancellationToken);
+        await Task.Delay(100, cancellationToken);
 
         // 2. Geçici (Dummy) veri üretimi
         // İstersen prompt'u da içeriğe ekleyerek debug yapmayı kolaylaştırabilirsin.
@@ -23,7 +23,7 @@ public class LlmClient : ILlmClient
         
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
-        return new LlmTextResponse
+        return new LlmTextResponseModel
         {
             Title = "Otomatik Oluşturulan Test Başlığı",
             Content = mockContent,

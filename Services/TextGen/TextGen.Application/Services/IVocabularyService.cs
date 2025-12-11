@@ -9,4 +9,5 @@ public interface IVocabularyService
 {
     // Metot ismini ihtiyacına göre düzenle
     Task<List<UserWordListDto>> GetUserWordListsAsync();
+    Task<UserWordListDto> GetUserWordAsync(Guid id);
 }

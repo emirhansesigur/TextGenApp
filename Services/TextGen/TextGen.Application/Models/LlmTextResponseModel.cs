@@ -1,6 +1,6 @@
 ﻿namespace TextGen.Application.Models;
 
-public class LlmTextResponse
+public class LlmTextResponseModel
 {
     public string Title { get; set; } = null!;
     public string Content { get; set; } = null!;

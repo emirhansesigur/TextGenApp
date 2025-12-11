@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TextGen.Application.Interfaces;
+using TextGen.Application.Services;
 using TextGen.Core.Entities;
 
 namespace TextGen.Infrastructure.Data;
