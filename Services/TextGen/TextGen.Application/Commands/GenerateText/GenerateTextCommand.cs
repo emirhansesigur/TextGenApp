@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using TextGen.Application.Models;
+using TextGen.Application.Models.DataTransfer;
 using TextGen.Application.Services;
 using TextGen.Core.Entities;
 
@@ -14,29 +15,27 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
 {
     public async Task<GenerateTextResponseModel> Handle(GenerateTextCommand request, CancellationToken cancellationToken)
     {
-        // 1. Kullanıcının kelime listesini getir
         var userIdFromAuth = Guid.Parse("00000000-0000-0000-0000-000000000001");
 
-        var UserWordDtos = await _vocabularyService.GetUserWordAsync(request.UserWordListId);
+        UserWordListDto userWordList = await _vocabularyService.GetUserWordListAsync(request.UserWordListId, cancellationToken);
 
-        //if (wordListDtos == null || !wordListDtos.Any())
-        //    throw new Exception("Bu listeye ait kelime bulunamadı.");
+        if (userWordList == null)
+            throw new Exception("Bu listeye ait kelime bulunamadı.");
 
-        //var allWords = wordListDtos.SelectMany(dto => dto.Words).Distinct().ToList();
+        var wordsFromUserWordList = userWordList.Words
+            .Select(w => w.Text)
+            .Distinct()
+            .ToList();
 
-        // 2. Prompt oluşturma
-        
         var prompt = _promptBuilder
                     .WithLevel(request.Level)
                     .WithTopic(request.Topic)
                     .WithWordRange(request.MinWordCount, request.MaxWordCount)
-                    //.WithWords(wordListDtos)
+                    .WithWords(wordsFromUserWordList)
                     .Build();
 
-        // 3. LLM API çağrısı
         var llmResponse = await _llmClient.GenerateTextAsync(prompt, cancellationToken);
 
-        // 4. GeneratedText kaydı oluştur
         var generatedText = new GeneratedText
         {
             Id = Guid.NewGuid(),
@@ -51,7 +50,6 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
 
         _dbContext.GeneratedTexts.Add(generatedText);
 
-        // 5. Kelime eşleşmeleri
         //foreach (var keyword in allWords)
         //{
         //    _dbContext.GeneratedTextKeywords.Add(new GeneratedTextKeyword
@@ -64,7 +62,6 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        // 6. Kullanıcıya dönüş
         return new GenerateTextResponseModel
         {
             Title = llmResponse.Title,

@@ -10,18 +10,11 @@ public class PromptBuilder
     private int _minWordCount;
     private int _maxWordCount;
 
-    //public PromptBuilder WithWords(IEnumerable<UserWordListDto> wordLists)
-    //{
-    //    if (wordLists != null)
-    //    {
-    //        // Use SelectMany to flatten the List<List<string>> into a single List<string>
-    //        _words = wordLists
-    //            .SelectMany(dto => dto.Words) // Extracts all inner List<string> from all DTOs
-    //            .ToList();
-    //    }
-
-    //    return this;
-    //}
+    public PromptBuilder WithWords(List<string> words)
+    {
+        _words = words;
+        return this;
+    }
 
     public PromptBuilder WithLevel(string level)
     {

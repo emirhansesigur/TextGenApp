@@ -6,30 +6,16 @@ namespace TextGen.Infrastructure.Services;
 
 public class VocabularyService(HttpClient _httpClient) : IVocabularyService
 {
-    public async Task<List<UserWordListDto>> GetUserWordListsAsync()
+    public async Task<UserWordListDto?> GetUserWordListAsync(Guid id, CancellationToken cancellationToken)
     {
-        var response = await _httpClient.GetAsync($"api/UserWordLists/byUser");
+        var response = await _httpClient.GetAsync($"api/UserWordLists/{id}" ,cancellationToken);
 
-        if (response.IsSuccessStatusCode)
+        if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
         {
-            // Gelen JSON'ı otomatik olarak DTO'ya çeviriyoruz.
-            return await response.Content.ReadFromJsonAsync<List<UserWordListDto>>();
+            return null;
         }
+        response.EnsureSuccessStatusCode();
 
-        // Hata durumunda boş liste dönebilir veya hata fırlatabilirsin.
-        return new List<UserWordListDto>();
-    }
-
-    public async Task<UserWordListDto> GetUserWordAsync(Guid id)
-    {
-        var response = await _httpClient.GetAsync($"api/UserWordLists/{id}");
-        if (response.IsSuccessStatusCode)
-        {
-            // Gelen JSON'ı otomatik olarak DTO'ya çeviriyoruz.
-            return await response.Content.ReadFromJsonAsync<UserWordListDto>();
-        }
-
-        // Hata durumunda boş liste dönebilir veya hata fırlatabilirsin.
-        return new UserWordListDto();
+        return await response.Content.ReadFromJsonAsync<UserWordListDto>(cancellationToken: cancellationToken);
     }
 }
