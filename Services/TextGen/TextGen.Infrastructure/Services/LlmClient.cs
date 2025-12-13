@@ -1,33 +1,111 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Microsoft.Extensions.Configuration; // API Key okumak için
 using TextGen.Application.Models;
 using TextGen.Application.Services;
 
 namespace TextGen.Infrastructure.Services;
 
+// LLM'den gelen JSON'u temsil eder. 
+// Infrastructure katmanında değil, Models klasöründe olmalıdır. Kolaylık için burada
+public class LlmApiContentPart
+{
+    // promptBuilder'dan gelen JSON'u tutacak alanlar
+    [JsonPropertyName("title")]
+    public string Title { get; set; } = string.Empty;
+
+    [JsonPropertyName("content")]
+    public string Content { get; set; } = string.Empty;
+
+    [JsonPropertyName("wordCount")]
+    public int WordCount { get; set; }
+
+    // KeywordsUsed alanı, bu örnekte kullanılmasa da LLM'den gelecektir.
+    [JsonPropertyName("keywordsUsed")]
+    public List<string> KeywordsUsed { get; set; } = new List<string>();
+}
+
 public class LlmClient : ILlmClient
 {
+    private readonly HttpClient _httpClient;
+    private readonly string _apiKey;
+
+    // HttpClient ve IConfiguration'ı DI üzerinden al
+    public LlmClient(HttpClient httpClient, IConfiguration configuration)
+    {
+        _httpClient = httpClient;
+
+        _apiKey = configuration["GEMINI_API_KEY"] ??
+                  throw new Exception("GEMINI_API_KEY bulunamadı. Lütfen .env dosyasını kontrol edin.");
+
+        // Base URL'i bir kere tanımlayabiliriz.
+        _httpClient.BaseAddress = new Uri("https://generativelanguage.googleapis.com/");
+    }
+
     public async Task<LlmTextResponseModel> GenerateTextAsync(string prompt, CancellationToken cancellationToken)
     {
-        // 1. Gerçekçi olması için sunucu gecikmesi simülasyonu (1.5 saniye)
-        await Task.Delay(100, cancellationToken);
+        var requestUrl = $"/v1beta/models/gemini-2.5-flash:generateContent?key={_apiKey}";
+        // Gemini API'nin beklediği istek gövdesi (Payload)
+        var payload = new
+        {
+            contents = new[]
+            {
+                new { parts = new[] { new { text = prompt } } }
+            },
+            generationConfig = new
+            {
+                response_mime_type = "application/json"
+            }
+        };
 
-        // 2. Geçici (Dummy) veri üretimi
-        // İstersen prompt'u da içeriğe ekleyerek debug yapmayı kolaylaştırabilirsin.
-        var mockContent = $@"
-        Bu, henüz LLM servisi bağlanmadığı için oluşturulmuş otomatik bir metindir. 
-        Sistem başarıyla çalışıyor! 
-        
-        Gelen Prompt Bilgisi: {prompt.Substring(0, Math.Min(prompt.Length, 50))}...
-        
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+        var response = await _httpClient.PostAsJsonAsync(requestUrl, payload, cancellationToken);
 
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorContent = await response.Content.ReadAsStringAsync(cancellationToken);
+            throw new HttpRequestException($"LLM API'den hata döndü. Status: {response.StatusCode}. Detay: {errorContent}");
+        }
+
+        var responseString = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        // Gelen yanıt (responseString) aşağıdaki gibi bir yapıdır:
+        /*
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "{\n  \"title\": \"...",\n  \"content\": \"...\",\n  \"wordCount\": 150,\n  \"keywordsUsed\": [\"...\"]\n}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+        */
+
+        // İç içe JSON yapısını ayrıştır
+        using var doc = JsonDocument.Parse(responseString);
+
+        // Asıl metin (yani PromptBuilder'dan istediğimiz JSON) en derin katmanda:
+        var textContent = doc.RootElement
+            .GetProperty("candidates")[0]
+            .GetProperty("content")
+            .GetProperty("parts")[0]
+            .GetProperty("text")
+            .GetString();
+
+        // LLM'den aldığımız saf JSON string'i, kendi LlmTextResponseModel'imize çeviriyoruz.
+        var result = JsonSerializer.Deserialize<LlmApiContentPart>(textContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        // Uygulama katmanının beklediği modele (LlmTextResponseModel) dönüştür
         return new LlmTextResponseModel
         {
-            Title = "Otomatik Oluşturulan Test Başlığı",
-            Content = mockContent,
-            WordCount = mockContent.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length
+            Title = result?.Title ?? "Başlık Yok",
+            Content = result?.Content ?? "İçerik Yok",
+            WordCount = result?.WordCount ?? 0
         };
     }
 }
