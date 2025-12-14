@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TextGen.Infrastructure.Data;
@@ -11,9 +12,11 @@ using TextGen.Infrastructure.Data;
 namespace TextGen.Infrastructure.Migrations
 {
     [DbContext(typeof(TextGenDbContext))]
-    partial class TextGenDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251214201137_Added_GeneratedTextRequest")]
+    partial class Added_GeneratedTextRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +63,7 @@ namespace TextGen.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("GeneratedTextRequestId")
+                    b.Property<Guid>("GeneratedTextId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Keyword")
@@ -70,7 +73,7 @@ namespace TextGen.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GeneratedTextRequestId");
+                    b.HasIndex("GeneratedTextId");
 
                     b.ToTable("GeneratedTextKeywords");
                 });
@@ -97,6 +100,9 @@ namespace TextGen.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<Guid>("UserWordListId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GeneratedTextId")
@@ -107,13 +113,13 @@ namespace TextGen.Infrastructure.Migrations
 
             modelBuilder.Entity("TextGen.Core.Entities.GeneratedTextKeyword", b =>
                 {
-                    b.HasOne("TextGen.Core.Entities.GeneratedTextRequest", "GeneratedTextRequest")
+                    b.HasOne("TextGen.Core.Entities.GeneratedText", "GeneratedText")
                         .WithMany("Keywords")
-                        .HasForeignKey("GeneratedTextRequestId")
+                        .HasForeignKey("GeneratedTextId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("GeneratedTextRequest");
+                    b.Navigation("GeneratedText");
                 });
 
             modelBuilder.Entity("TextGen.Core.Entities.GeneratedTextRequest", b =>
@@ -129,13 +135,10 @@ namespace TextGen.Infrastructure.Migrations
 
             modelBuilder.Entity("TextGen.Core.Entities.GeneratedText", b =>
                 {
+                    b.Navigation("Keywords");
+
                     b.Navigation("Request")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("TextGen.Core.Entities.GeneratedTextRequest", b =>
-                {
-                    b.Navigation("Keywords");
                 });
 #pragma warning restore 612, 618
         }

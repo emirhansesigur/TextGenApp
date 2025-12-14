@@ -42,24 +42,28 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
             UserId = userIdFromAuth,
             Title = llmResponse.Title,
             Content = llmResponse.Content,
-            Topic = request.Topic,
-            Level = request.Level,
             WordCount = llmResponse.WordCount,
             CreatedAt = DateTime.UtcNow
         };
 
+        var textRequest = new GeneratedTextRequest
+        {
+            Id = Guid.NewGuid(),
+            GeneratedTextId = generatedText.Id,
+            Topic = request.Topic,
+            Level = request.Level
+        };
+
+        textRequest.Keywords = wordsFromUserWordList.Select(word => new GeneratedTextKeyword
+        {
+            Id = Guid.NewGuid(),
+            GeneratedTextRequestId = textRequest.Id, // FK, Request'i gösteriyor
+            Keyword = word
+        }).ToList();
+
+        generatedText.Request = textRequest;
+
         _dbContext.GeneratedTexts.Add(generatedText);
-
-        //foreach (var keyword in allWords)
-        //{
-        //    _dbContext.GeneratedTextKeywords.Add(new GeneratedTextKeyword
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        GeneratedTextId = generatedText.Id,
-        //        Keyword = keyword
-        //    });
-        //}
-
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         return new GenerateTextResponseModel

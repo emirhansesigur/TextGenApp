@@ -6,7 +6,7 @@ namespace TextGen.Core.Entities;
 
 public class GeneratedTextKeyword : BaseEntity
 {
-    public Guid GeneratedTextId { get; set; }
+    public Guid GeneratedTextRequestId { get; set; }
     public string Keyword { get; set; } = null!;
-    public GeneratedText GeneratedText { get; set; } = null!;
+    public GeneratedTextRequest GeneratedTextRequest { get; set; } = null!;
 }
