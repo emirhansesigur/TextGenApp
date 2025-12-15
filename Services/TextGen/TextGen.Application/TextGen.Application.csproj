@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Templates\" />
     <Folder Include="Queries\" />
   </ItemGroup>
 
@@ -18,6 +19,15 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Vocabulary\Vocabulary.Core\Vocabulary.Core.csproj" />
     <ProjectReference Include="..\TextGen.Core\TextGen.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\TextGenerationPrompt.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\VocabularyValidationPrompt.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 

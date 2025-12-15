@@ -8,10 +8,8 @@ using TextGen.Application.Services;
 namespace TextGen.Infrastructure.Services;
 
 // LLM'den gelen JSON'u temsil eder. 
-// Infrastructure katmanında değil, Models klasöründe olmalıdır. Kolaylık için burada
 public class LlmApiContentPart
 {
-    // promptBuilder'dan gelen JSON'u tutacak alanlar
     [JsonPropertyName("title")]
     public string Title { get; set; } = string.Empty;
 
@@ -46,16 +44,25 @@ public class LlmClient : ILlmClient
     public async Task<LlmTextResponseModel> GenerateTextAsync(string prompt, CancellationToken cancellationToken)
     {
         var requestUrl = $"/v1beta/models/gemini-2.5-flash:generateContent?key={_apiKey}";
-        // Gemini API'nin beklediği istek gövdesi (Payload)
+
+        // 1. System Instruction: Modelin kimliği (Bunu da config'den veya dosyadan alabilirsin)
+        var systemInstructionText = "You are a professional English Language Teacher (ELT) AI. You strictly output JSON.";
+
+        // 2. Payload Yapısı (Gemini System Instruction Formatı)
         var payload = new
         {
+            system_instruction = new
+            {
+                parts = new[] { new { text = systemInstructionText } }
+            },
             contents = new[]
             {
-                new { parts = new[] { new { text = prompt } } }
+                new { role = "user", parts = new[] { new { text = prompt } } }
             },
             generationConfig = new
             {
-                response_mime_type = "application/json"
+                response_mime_type = "application/json",
+                temperature = 0.7 // Yaratıcılık seviyesi (0.0 - 1.0). 0.7 dengelidir.
             }
         };
 

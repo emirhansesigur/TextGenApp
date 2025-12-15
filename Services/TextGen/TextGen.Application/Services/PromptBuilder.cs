@@ -37,32 +37,27 @@ public class PromptBuilder
 
     public string Build()
     {
+        // Prod'da Cache'lemek performans artırır)
+        // Dosya yolunu AppDomain.CurrentDomain.BaseDirectory ile dinamik bul
+        var templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "TextGenerationPrompt.txt");
+        var template = File.ReadAllText(templatePath);
+
         var requiredWords = _words.Any()
-            ? string.Join(", ", _words.Select(w => $"\"{w}\""))
-            : string.Empty;
+            ? string.Join(", ", _words)
+            : "No specific vocabulary required.";
 
-        return $@"
-                You are an AI English text generator.
+        // 2. Yer tutucuları (Placeholders) değiştir
+        
+        var prompt = template
+            .Replace("{{Level}}", _level)
+            .Replace("{{Topic}}", _topic)
+            .Replace("{{MinWordCount}}", _minWordCount.ToString())
+            .Replace("{{MaxWordCount}}", _maxWordCount.ToString())
+            .Replace("{{Words}}", requiredWords);
 
-                Generate an English reading text using the requirements below:
+        return prompt;
 
-                ### Requirements:
-                - Level: {_level}
-                - Topic: {_topic}
-                - Word count: between {_minWordCount} and {_maxWordCount} words
-                - Include the following target vocabulary words in the text naturally:
-                  [{requiredWords}]
 
-                ### Output format (must be STRICT JSON):
-                {{
-                  ""title"": """",
-                  ""content"": """",
-                  ""wordCount"": 0,
-                  ""keywordsUsed"": []
-                }}
-
-                Only output valid JSON. No explanations.
-                ";
     }
 
 
