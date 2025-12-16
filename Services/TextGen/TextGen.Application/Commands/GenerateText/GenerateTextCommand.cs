@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using TextGen.Application.Models;
 using TextGen.Application.Models.DataTransfer;
+using TextGen.Application.Models.Llm;
 using TextGen.Application.Services;
 using TextGen.Core.Entities;
 
@@ -19,30 +20,38 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
 
         UserWordListDto userWordList = await _vocabularyService.GetUserWordListAsync(request.UserWordListId, cancellationToken);
 
-        if (userWordList == null)
-            throw new Exception("Bu listeye ait kelime bulunamadı.");
+        if (userWordList == null) throw new Exception("Bu listeye ait kelime bulunamadı.");
 
-        var wordsFromUserWordList = userWordList.Words
-            .Select(w => w.Text)
-            .Distinct()
-            .ToList();
+        var wordsFromUserWordList = userWordList.Words.Select(w => w.Text).Distinct().ToList();
 
-        var prompt = _promptBuilder
-                    .WithLevel(request.Level)
-                    .WithTopic(request.Topic)
-                    .WithWordRange(request.MinWordCount, request.MaxWordCount)
-                    .WithWords(wordsFromUserWordList)
-                    .Build();
+        var validationPrompt = _promptBuilder.BuildValidationPrompt(request.Topic, wordsFromUserWordList);
 
-        var llmResponse = await _llmClient.GenerateTextAsync(prompt, cancellationToken);
+        var validationResult = await _llmClient.GenerateContentAsync<VocabularyValidationResponse>(validationPrompt, cancellationToken);
+
+        if (!validationResult.IsValid)
+        {
+            // NOT: İstersen burada özel bir Exception fırlatıp Middleware'de yakalayabilirsin
+            // Örnek: throw new BusinessRuleException(validationResult.Reason);
+            throw new InvalidOperationException($"Metin oluşturulamadı: {validationResult.Reason}");
+        }
+
+        var generationPrompt = _promptBuilder.BuildGenerationPrompt(
+            request.Level,
+            request.Topic,
+            request.MinWordCount,
+            request.MaxWordCount,
+            validationResult.ApprovedWords
+        );
+
+        var textResult = await _llmClient.GenerateContentAsync<LlmTextResponseModel>(generationPrompt, cancellationToken);
 
         var generatedText = new GeneratedText
         {
             Id = Guid.NewGuid(),
             UserId = userIdFromAuth,
-            Title = llmResponse.Title,
-            Content = llmResponse.Content,
-            WordCount = llmResponse.WordCount,
+            Title = textResult.Title,
+            Content = textResult.Content,
+            WordCount = textResult.WordCount,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -54,10 +63,11 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
             Level = request.Level
         };
 
-        textRequest.Keywords = wordsFromUserWordList.Select(word => new GeneratedTextKeyword
+        // ToDo (fix): kaydedilecek kelime LLM'den alınacak
+        textRequest.Keywords = validationResult.ApprovedWords.Select(word => new GeneratedTextKeyword
         {
             Id = Guid.NewGuid(),
-            GeneratedTextRequestId = textRequest.Id, // FK, Request'i gösteriyor
+            GeneratedTextRequestId = textRequest.Id,
             Keyword = word
         }).ToList();
 
@@ -68,11 +78,12 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
 
         return new GenerateTextResponseModel
         {
-            Title = llmResponse.Title,
-            Content = llmResponse.Content,
-            WordCount = llmResponse.WordCount,
+            Title = textResult.Title,
+            Content = textResult.Content,
+            WordCount = textResult.WordCount,
             Level = request.Level,
             Topic = request.Topic
         };
+
     }
 }

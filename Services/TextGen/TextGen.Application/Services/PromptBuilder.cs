@@ -1,64 +1,42 @@
-﻿using TextGen.Application.Models.DataTransfer;
+﻿using System.Reflection.Emit;
+using TextGen.Application.Models.DataTransfer;
 
 namespace TextGen.Application.Services;
 
 public class PromptBuilder
 {
-    private List<string> _words = new();
-    private string? _level;
-    private string? _topic;
-    private int _minWordCount;
-    private int _maxWordCount;
+    // Template'leri hafızada tut
+    private readonly string _generationTemplate;
+    private readonly string _validationTemplate;
 
-    public PromptBuilder WithWords(List<string> words)
+    public PromptBuilder()
     {
-        _words = words;
-        return this;
+        var basePath = AppDomain.CurrentDomain.BaseDirectory;
+
+        _generationTemplate = File.ReadAllText(Path.Combine(basePath, "Templates", "TextGenerationPrompt.txt"));
+        _validationTemplate = File.ReadAllText(Path.Combine(basePath, "Templates", "VocabularyValidationPrompt.txt"));
     }
 
-    public PromptBuilder WithLevel(string level)
+    public string BuildGenerationPrompt(string level, string topic, int min, int max, List<string> approvedWords)
     {
-        _level = level;
-        return this;
+        var wordsString = string.Join(", ", approvedWords);
+
+        return _generationTemplate
+            .Replace("{{Level}}", level)
+            .Replace("{{Topic}}", topic)
+            .Replace("{{MinWordCount}}", min.ToString())
+            .Replace("{{MaxWordCount}}", max.ToString())
+            .Replace("{{Words}}", wordsString);
     }
 
-    public PromptBuilder WithTopic(string topic)
+    public string BuildValidationPrompt(string topic, List<string> candidateWords)
     {
-        _topic = topic;
-        return this;
+        var wordsString = string.Join(", ", candidateWords);
+
+        var x = _validationTemplate
+            .Replace("{{Topic}}", topic)
+            .Replace("{{Words}}", wordsString);
+
+        return x;
     }
-
-    public PromptBuilder WithWordRange(int min, int max)
-    {
-        _minWordCount = min;
-        _maxWordCount = max;
-        return this;
-    }
-
-    public string Build()
-    {
-        // Prod'da Cache'lemek performans artırır)
-        // Dosya yolunu AppDomain.CurrentDomain.BaseDirectory ile dinamik bul
-        var templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "TextGenerationPrompt.txt");
-        var template = File.ReadAllText(templatePath);
-
-        var requiredWords = _words.Any()
-            ? string.Join(", ", _words)
-            : "No specific vocabulary required.";
-
-        // 2. Yer tutucuları (Placeholders) değiştir
-        
-        var prompt = template
-            .Replace("{{Level}}", _level)
-            .Replace("{{Topic}}", _topic)
-            .Replace("{{MinWordCount}}", _minWordCount.ToString())
-            .Replace("{{MaxWordCount}}", _maxWordCount.ToString())
-            .Replace("{{Words}}", requiredWords);
-
-        return prompt;
-
-
-    }
-
-
 }
