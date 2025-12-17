@@ -63,8 +63,7 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
             Level = request.Level
         };
 
-        // ToDo (fix): kaydedilecek kelime LLM'den alınacak
-        textRequest.Keywords = validationResult.ApprovedWords.Select(word => new GeneratedTextKeyword
+        textRequest.Keywords = textResult.KeywordsUsed.Select(word => new GeneratedTextKeyword
         {
             Id = Guid.NewGuid(),
             GeneratedTextRequestId = textRequest.Id,
@@ -82,7 +81,8 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
             Content = textResult.Content,
             WordCount = textResult.WordCount,
             Level = request.Level,
-            Topic = request.Topic
+            Topic = request.Topic,
+            Keywords = textResult.KeywordsUsed
         };
 
     }

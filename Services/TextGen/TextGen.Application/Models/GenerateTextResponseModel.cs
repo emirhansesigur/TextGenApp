@@ -7,4 +7,5 @@ public class GenerateTextResponseModel
     public string Topic { get; set; } = null!;
     public string Level { get; set; } = null!;
     public int WordCount { get; set; }
+    public List<string> Keywords { get; set; } = new List<string>();
 }
