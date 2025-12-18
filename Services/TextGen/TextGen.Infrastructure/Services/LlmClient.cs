@@ -46,7 +46,7 @@ public class LlmClient : ILlmClient
         {
             system_instruction = new { parts = new[] { new { text = systemInstruction } } },
             contents = new[] { new { role = "user", parts = new[] { new { text = prompt } } } },
-            generationConfig = new { response_mime_type = "application/json", temperature = 0.5 } // Temperature'ı biraz düşürdüm (daha tutarlı JSON için)
+            generationConfig = new { response_mime_type = "application/json", temperature = 0.5 } 
         };
 
         var response = await _httpClient.PostAsJsonAsync(requestUrl, payload, cancellationToken);
@@ -106,4 +106,39 @@ public class LlmClient : ILlmClient
         }
         return json.Trim();
     }
+
+    public async Task<T> PromptTest<T>(string prompt, CancellationToken cancellationToken)
+    {
+        var requestUrl = $"/v1beta/models/gemini-2.5-flash:generateContent?key={_apiKey}";
+        var payload = new
+        {
+            contents = new[] { new { parts = new[] { new { text = prompt } } } }
+        }; // "contents" ve "parts" zorunlu veriler
+
+        var response = await _httpClient.PostAsJsonAsync(requestUrl, payload, cancellationToken);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var err = await response.Content.ReadAsStringAsync(cancellationToken);
+            throw new HttpRequestException($"API Hatası: {response.StatusCode} - {err}");
+        }
+
+        var responseString = await response.Content.ReadAsStringAsync(cancellationToken);
+        using var doc = JsonDocument.Parse(responseString);
+
+        // Gemini'nin standart JSON yapısından metni çekiyoruz
+        var rawText = doc.RootElement
+            .GetProperty("candidates")[0]
+            .GetProperty("content")
+            .GetProperty("parts")[0]
+            .GetProperty("text")
+            .GetString();
+
+        // Handler içindeki PromptTestResponseModel { Response = ... } yapısına uyması için
+        // metni bir JSON objesi gibi simüle edip Deserialize ediyoruz
+        var jsonWrapper = JsonSerializer.Serialize(new { Response = rawText });
+
+        return JsonSerializer.Deserialize<T>(jsonWrapper)!;
+    }
+
 }
