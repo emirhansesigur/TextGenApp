@@ -33,7 +33,8 @@ public class GetUserWordListQueryHandler(IVocabularyDbContext _dbContext) : IReq
             {
                 Id = word.Id,
                 Text = word.Text,
-                Meaning = word.Meaning
+                Meaning = word.Meaning,
+                Status = word.Status
             }).ToList()
         };
     }

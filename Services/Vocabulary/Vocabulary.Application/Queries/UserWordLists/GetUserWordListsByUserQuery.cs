@@ -34,7 +34,8 @@ public class GetUserWordListsByUserQueryHandler(IVocabularyDbContext _dbContext)
             {
                 Id = word.Id,
                 Text = word.Text,
-                Meaning = word.Meaning
+                Meaning = word.Meaning,
+                Status = word.Status
             }).ToList()
         }).ToList();
     }

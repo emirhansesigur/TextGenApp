@@ -21,7 +21,8 @@ public class CreateUserWordCommandHandler(IVocabularyDbContext _dbContext) : IRe
             Id = Guid.NewGuid(),
             UserWordListId = request.UserWordListId, // Validation needed
             Text = request.Text,
-            Meaning = request.Meaning
+            Meaning = request.Meaning,
+            Status = request.Status
         };
 
         _dbContext.UserWords.Add(userWord);

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Vocabulary.Core.Entities;
+﻿namespace Vocabulary.Core.Entities;
 
 public abstract class BaseEntity
 {

@@ -38,4 +38,13 @@ public class UserWordsController : ApiControllerBase
         return Ok(result);
     }
 
+    [HttpPut("wordStatus/{id}")]
+    public async Task<IActionResult> UpdateWordStatus(Guid id, [FromBody] UpdateWordStatusCommand command)
+    {
+        command.Id = id;
+
+        var result = await Mediator.Send(command);
+        return Ok(result);
+    }
+
 }
