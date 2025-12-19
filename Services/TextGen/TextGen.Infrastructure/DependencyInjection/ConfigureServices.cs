@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Hangfire;
+using Hangfire.PostgreSql;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TextGen.Application.Services;
 using TextGen.Infrastructure.Data;
@@ -19,6 +21,23 @@ public static class DependencyInjection
 
         // 2. Dış Bağlantı Servisleri (LLM Client)
         services.AddScoped<ILlmClient, LlmClient>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddInfrastructureHangfire(this IServiceCollection services, string connectionString)
+    {
+        services.AddHangfire(config => config
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UsePostgreSqlStorage(options =>
+            {
+                options.UseNpgsqlConnection(connectionString);
+            }));
+
+        // Hangfire işlerini yürütecek sunucuyu ekle
+        services.AddHangfireServer();
 
         return services;
     }

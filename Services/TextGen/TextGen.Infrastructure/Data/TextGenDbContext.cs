@@ -14,7 +14,7 @@ public class TextGenDbContext : DbContext, ITextGenDbContext
     public DbSet<GeneratedText> GeneratedTexts => Set<GeneratedText>();
     public DbSet<GeneratedTextRequest> GeneratedTextRequests => Set<GeneratedTextRequest>();
     public DbSet<GeneratedTextKeyword> GeneratedTextKeywords => Set<GeneratedTextKeyword>();
-
+    public DbSet<SuggestedTopic> SuggestedTopics => Set<SuggestedTopic>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<GeneratedText>(entity =>
@@ -38,7 +38,7 @@ public class TextGenDbContext : DbContext, ITextGenDbContext
             // YENİ İLİŞKİ: Request -> Keywords (1-e-Çok)
             entity.HasMany(x => x.Keywords)
                   .WithOne(x => x.GeneratedTextRequest)
-                  .HasForeignKey(x => x.GeneratedTextRequestId) // FK artık RequestId
+                  .HasForeignKey(x => x.GeneratedTextRequestId)
                   .OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -46,6 +46,14 @@ public class TextGenDbContext : DbContext, ITextGenDbContext
         {
             entity.HasKey(x => x.Id);
             entity.Property(x => x.Keyword).HasMaxLength(100).IsRequired();
+        });
+
+        modelBuilder.Entity<SuggestedTopic>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.Title).IsRequired();
+            entity.Property(x => x.Content).IsRequired();
+            entity.Property(x => x.Category).IsRequired();
         });
 
         base.OnModelCreating(modelBuilder);

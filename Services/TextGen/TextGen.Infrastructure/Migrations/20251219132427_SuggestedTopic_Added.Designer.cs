@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TextGen.Infrastructure.Data;
@@ -11,9 +12,11 @@ using TextGen.Infrastructure.Data;
 namespace TextGen.Infrastructure.Migrations
 {
     [DbContext(typeof(TextGenDbContext))]
-    partial class TextGenDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251219132427_SuggestedTopic_Added")]
+    partial class SuggestedTopic_Added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

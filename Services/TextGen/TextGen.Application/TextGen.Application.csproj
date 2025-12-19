@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Templates\" />
-    <Folder Include="Queries\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +22,9 @@
 
   <ItemGroup>
     <None Update="Templates\TextGenerationPrompt.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\TopicSuggestionPrompt.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Templates\VocabularyValidationPrompt.txt">

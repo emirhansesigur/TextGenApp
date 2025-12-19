@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TextGen.Core.Entities;
+﻿namespace TextGen.Core.Entities;
 
 public abstract class BaseEntity
 {
