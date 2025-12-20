@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using TextGen.Application.Models;
+using TextGen.Application.Models.Llm;
 using TextGen.Application.Services;
 using TextGen.Core.Entities;
 
@@ -17,7 +17,7 @@ public class GenerateDailyTopicsCommandHandler(ITextGenDbContext _dbContext, ILl
         var prompt = _promptBuilder.BuildTopicSuggestionPrompt();
 
         // LLM'den listeyi alıyoruz
-        var suggestedDtos = await _llmClient.GenerateContentAsync<List<TopicSuggestionDto>>(prompt, cancellationToken);
+        var suggestedDtos = await _llmClient.GenerateContentAsync<List<TopicSuggestionResponseModel>>(prompt, cancellationToken);
 
         if (suggestedDtos == null || !suggestedDtos.Any()) return false;
 

@@ -2,7 +2,7 @@
 
 namespace TextGen.Application.Models.Llm;
 
-public class VocabularyValidationResponse
+public class VocabularyValidationResponseModel
 {
     [JsonPropertyName("isValid")]
     public bool IsValid { get; set; }

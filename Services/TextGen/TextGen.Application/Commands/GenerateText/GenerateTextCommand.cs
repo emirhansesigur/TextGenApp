@@ -26,7 +26,7 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
 
         var validationPrompt = _promptBuilder.BuildValidationPrompt(request.Topic, wordsFromUserWordList);
 
-        var validationResult = await _llmClient.GenerateContentAsync<VocabularyValidationResponse>(validationPrompt, cancellationToken);
+        var validationResult = await _llmClient.GenerateContentAsync<VocabularyValidationResponseModel>(validationPrompt, cancellationToken);
 
         if (!validationResult.IsValid)
         {

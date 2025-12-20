@@ -1,6 +1,6 @@
-﻿namespace TextGen.Application.Models;
+namespace TextGen.Application.Models.Llm;
 
-public class TopicSuggestionDto
+public class TopicSuggestionResponseModel
 {
     public string Title { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty; 
