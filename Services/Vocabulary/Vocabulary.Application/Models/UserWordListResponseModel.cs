@@ -10,5 +10,5 @@ public class UserWordListResponseModel
     public Guid UserId { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Level { get; set; } = string.Empty;
-    public List<UserWordResponseModel> Words { get; set; } = new();
+    public List<UserWordResponseModel> UserWords { get; set; } = new();
 }

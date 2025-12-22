@@ -29,7 +29,7 @@ public class GetUserWordListQueryHandler(IVocabularyDbContext _dbContext) : IReq
             Name = userWordList.Name,
             Level = userWordList.Level,
             UserId = userWordList.UserId,
-            Words = userWordList.UserWords.Select(word => new UserWordResponseModel
+            UserWords = userWordList.UserWords.Select(word => new UserWordResponseModel
             {
                 Id = word.Id,
                 Text = word.Text,
