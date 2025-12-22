@@ -15,6 +15,14 @@ public class UserWordListsController : ApiControllerBase
         return CreatedAtAction(nameof(GetUserWordList), new { id = result.Id }, result);
     }
 
+    // Dıştan istek gelmesini engelle
+    [HttpPost("Generated")]
+    public async Task<IActionResult> CreateGeneratedWordList([FromBody] CreateGeneratedWordListCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return Ok(result);
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserWordList(Guid id)
     {

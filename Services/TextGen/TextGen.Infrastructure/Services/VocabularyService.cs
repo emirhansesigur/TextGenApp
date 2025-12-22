@@ -18,4 +18,11 @@ public class VocabularyService(HttpClient _httpClient) : IVocabularyService
 
         return await response.Content.ReadFromJsonAsync<UserWordListDto>(cancellationToken: cancellationToken);
     }
+
+    public async Task<bool> SaveGeneratedWordListAsync(UserWordListDto userWordListDto, CancellationToken cancellationToken)
+    {
+        var response = await _httpClient.PostAsJsonAsync("api/UserWordLists/Generated", userWordListDto, cancellationToken);
+
+        return response.IsSuccessStatusCode;
+    }
 }

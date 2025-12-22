@@ -9,6 +9,7 @@ public class PromptBuilder
     private readonly string _generationTemplate;
     private readonly string _validationTemplate;
     private readonly string _topicSuggestionTemplate;
+    private readonly string _wordListGenerationTemplate;
 
     public PromptBuilder()
     {
@@ -17,6 +18,7 @@ public class PromptBuilder
         _generationTemplate = File.ReadAllText(Path.Combine(basePath, "Templates", "TextGenerationPrompt.txt"));
         _validationTemplate = File.ReadAllText(Path.Combine(basePath, "Templates", "VocabularyValidationPrompt.txt"));
         _topicSuggestionTemplate = File.ReadAllText(Path.Combine(basePath, "Templates", "TopicSuggestionPrompt.txt"));
+        _wordListGenerationTemplate = File.ReadAllText(Path.Combine(basePath, "Templates", "WordListGenerationPrompt.txt"));
     }
 
     public string BuildGenerationPrompt(string level, string topic, int min, int max, List<string> approvedWords)
@@ -44,7 +46,12 @@ public class PromptBuilder
 
     public string BuildTopicSuggestionPrompt()
     {
-        // Şu an için içine bir değişken gömmüyoruz ama ileride tarih vb. eklenebilir.
         return _topicSuggestionTemplate;
+    }
+
+    public string BuildWordListGenerationPrompt(string userRequest)
+    {
+        return _wordListGenerationTemplate
+            .Replace("{{UserRequest}}", userRequest);
     }
 }

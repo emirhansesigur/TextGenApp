@@ -22,7 +22,7 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
 
         if (userWordList == null) throw new Exception("Bu listeye ait kelime bulunamadı.");
 
-        var wordsFromUserWordList = userWordList.Words.Select(w => w.Text).Distinct().ToList();
+        var wordsFromUserWordList = userWordList.UserWords.Select(w => w.Text).Distinct().ToList();
 
         var validationPrompt = _promptBuilder.BuildValidationPrompt(request.Topic, wordsFromUserWordList);
 
