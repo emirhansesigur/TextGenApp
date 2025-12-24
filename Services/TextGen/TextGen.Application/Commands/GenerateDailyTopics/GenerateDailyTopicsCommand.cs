@@ -27,7 +27,6 @@ public class GenerateDailyTopicsCommandHandler(ITextGenDbContext _dbContext, ILl
             Title = dto.Title,
             Content = dto.Content,
             Category = dto.Category,
-            CreatedAt = DateTime.UtcNow
         }).ToList();
 
         await _dbContext.SuggestedTopics.AddRangeAsync(entities, cancellationToken);
