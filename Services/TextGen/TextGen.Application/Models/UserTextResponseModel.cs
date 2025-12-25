@@ -1,9 +1,8 @@
 ﻿namespace TextGen.Application.Models;
 
-public class LlmTextResponseModel
+public class UserTextResponseModel
 {
     public string Title { get; set; } = null!;
     public string Content { get; set; } = null!;
     public int WordCount { get; set; }
-    public List<string> KeywordsUsed { get; set; } = new List<string>();
 }
