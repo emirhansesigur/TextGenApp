@@ -12,22 +12,22 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/Vocabulary/Vocabulary.API/Vocabulary.API.csproj", "Services/Vocabulary/Vocabulary.API/"]
-COPY ["Services/Vocabulary/Vocabulary.Application/Vocabulary.Application.csproj", "Services/Vocabulary/Vocabulary.Application/"]
-COPY ["Services/Vocabulary/Vocabulary.Core/Vocabulary.Core.csproj", "Services/Vocabulary/Vocabulary.Core/"]
-COPY ["Services/Vocabulary/Vocabulary.Infrastructure/Vocabulary.Infrastructure.csproj", "Services/Vocabulary/Vocabulary.Infrastructure/"]
-RUN dotnet restore "./Services/Vocabulary/Vocabulary.API/Vocabulary.API.csproj"
+COPY ["Services/TextGen/TextGen.API/TextGen.API.csproj", "Services/TextGen/TextGen.API/"]
+COPY ["Services/TextGen/TextGen.Application/TextGen.Application.csproj", "Services/TextGen/TextGen.Application/"]
+COPY ["Services/TextGen/TextGen.Core/TextGen.Core.csproj", "Services/TextGen/TextGen.Core/"]
+COPY ["Services/TextGen/TextGen.Infrastructure/TextGen.Infrastructure.csproj", "Services/TextGen/TextGen.Infrastructure/"]
+RUN dotnet restore "./Services/TextGen/TextGen.API/TextGen.API.csproj"
 COPY . .
-WORKDIR "/src/Services/Vocabulary/Vocabulary.API"
-RUN dotnet build "./Vocabulary.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Services/TextGen/TextGen.API"
+RUN dotnet build "./TextGen.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Vocabulary.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./TextGen.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Vocabulary.API.dll"]
+ENTRYPOINT ["dotnet", "TextGen.API.dll"]

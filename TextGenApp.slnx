@@ -15,4 +15,7 @@
     <Project Path="Services/Vocabulary/Vocabulary.Core/Vocabulary.Core.csproj" Id="d6c5fdac-031a-4d33-aa1b-fc790fd0dc1c" />
     <Project Path="Services/Vocabulary/Vocabulary.Infrastructure/Vocabulary.Infrastructure.csproj" Id="69cee38d-3f27-480d-988f-0849dbf73ee8" />
   </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="docker-compose.yml" />
+  </Folder>
 </Solution>

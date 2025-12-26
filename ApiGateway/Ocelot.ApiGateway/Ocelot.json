@@ -11,8 +11,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "vocabulary-service",
+          "Port": 8080
         }
       ]
     },
@@ -27,14 +27,13 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002  
+          "Host": "textgen-service",
+          "Port": 8080
         }
       ]
     }
   ],
   "GlobalConfiguration": {
-    // Gateway projenin çalışacağı adres (launchSettings.json ile aynı olmalı)
-    "BaseUrl": "http://localhost:8000"
+    "BaseUrl": "http://localhost:5000" // Dış dünya buraya 5000'den gelecek
   }
 }

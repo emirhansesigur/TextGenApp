@@ -7,7 +7,10 @@ using TextGen.Application.Services;
 using TextGen.Infrastructure.DependencyInjection;
 using TextGen.Infrastructure.Services;
 
-Env.Load();
+if (File.Exists(".env"))
+{
+    Env.Load();
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
 if (string.IsNullOrEmpty(connectionString))
 {
-    throw new Exception(".env dosyasından connection string okunamadı!");
+    throw new Exception("Environment variable 'DB_CONNECTION_STRING' okunamadı");
 }
 
 builder.Services.AddControllers();
@@ -26,10 +29,12 @@ builder.Services.AddInfrastructureServices(connectionString);
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureHangfire(connectionString);
 
+var vocabularyServiceUrl = Environment.GetEnvironmentVariable("VOCABULARY_SERVICE_URL") ?? "http://localhost:5001/";
+
 // --- Dış Servisler ve HTTP İstemcileri (Infrastructure Layer) ---
 builder.Services.AddHttpClient<IVocabularyService, VocabularyService>(client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5001/");
+    client.BaseAddress = new Uri(vocabularyServiceUrl);
     client.Timeout = TimeSpan.FromSeconds(10);
 });
 

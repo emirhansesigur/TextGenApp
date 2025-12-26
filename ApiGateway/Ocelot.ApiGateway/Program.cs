@@ -4,7 +4,7 @@ using Ocelot.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 // 1. Ocelot.json dosyasını konfigürasyona ekle
-builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+builder.Configuration.AddJsonFile("Ocelot.json", optional: false, reloadOnChange: true);
 
 // 2. Ocelot servisini ekle
 builder.Services.AddOcelot(builder.Configuration);

@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Vocabulary\Vocabulary.Core\Vocabulary.Core.csproj" />
     <ProjectReference Include="..\TextGen.Core\TextGen.Core.csproj" />
   </ItemGroup>
 
