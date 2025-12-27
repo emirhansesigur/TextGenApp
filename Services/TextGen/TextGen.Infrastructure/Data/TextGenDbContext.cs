@@ -26,7 +26,8 @@ public class TextGenDbContext : DbContext, ITextGenDbContext
             // GeneratedText -> GeneratedTextRequest (1-e-1 İlişki)
             entity.HasOne(x => x.Request)
                   .WithOne(x => x.GeneratedText)
-                  .HasForeignKey<GeneratedTextRequest>(x => x.GeneratedTextId);
+                  .HasForeignKey<GeneratedTextRequest>(x => x.GeneratedTextId)
+                  .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<GeneratedTextRequest>(entity =>

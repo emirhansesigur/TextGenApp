@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TextGen.Application.Commands.GenerateText;
 using TextGen.Application.Queries.GetDailyTopics;
 using TextGen.Application.Queries.GetGeneratedText;
 
@@ -30,5 +31,19 @@ public class ContentController : ApiControllerBase
         var query = new GetUserTextByUserQuery();
         var result = await Mediator.Send(query);
         return Ok(result);
+    }
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUserText(Guid id)
+    {
+        var command = new DeleteUserTextCommand { Id = id };
+        var result = await Mediator.Send(command);
+
+        if (!result)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
     }
 }
