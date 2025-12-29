@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "textgen.api": "StartDebugging",
+        "vocabulary.api": "StartDebugging",
+        "ocelot.apigateway": "StartDebugging"
+      }
+    }
+  }
+}

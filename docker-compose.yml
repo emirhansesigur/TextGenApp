@@ -1,48 +1,34 @@
-version: '3.8'
-
 services:
-  # API Gateway
-  apigateway:
+  textgen.api:
+    container_name: textgen-service
+    image: ${DOCKER_REGISTRY-}textgenapi
+    build:
+      context: .
+      dockerfile: Services/TextGen/TextGen.API/Dockerfile
+    networks:
+      - textgen-network
+
+  vocabulary.api:
+    container_name: vocabulary-service
+    image: ${DOCKER_REGISTRY-}vocabularyapi
+    build:
+      context: .
+      dockerfile: Services/Vocabulary/Vocabulary.API/Dockerfile
+    networks:
+      - textgen-network
+
+  ocelot.apigateway:
     container_name: ocelot-gateway
+    image: ${DOCKER_REGISTRY-}ocelotapigateway
     build:
       context: .
       dockerfile: ApiGateway/Ocelot.ApiGateway/Dockerfile
-    ports:
-      - "5000:8080" # Dışarıdan 5000 portuyla erişeceksin
     depends_on:
       - textgen.api
       - vocabulary.api
     networks:
       - textgen-network
-
-  # TextGen Microservice
-  textgen.api:
-    container_name: textgen-service
-    build:
-      context: .
-      dockerfile: Services/TextGen/TextGen.API/Dockerfile
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:8080
-      - VOCABULARY_SERVICE_URL=http://vocabulary-service:8080/
-      - DB_CONNECTION_STRING={your_textgen_conn_string}
-      - GEMINI_API_KEY={your_key}
-    networks:
-      - textgen-network
-
-  # Vocabulary Microservice
-  vocabulary.api:
-    container_name: vocabulary-service
-    build:
-      context: .
-      dockerfile: Services/Vocabulary/Vocabulary.API/Dockerfile
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:8080
-      - DB_CONNECTION_STRING={your_vocab_conn_string}
-    networks:
-      - textgen-network
-
+        
 networks:
   textgen-network:
     driver: bridge
