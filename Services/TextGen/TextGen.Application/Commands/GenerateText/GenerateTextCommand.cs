@@ -52,7 +52,14 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
             Title = textResult.Title,
             Content = textResult.Content,
             WordCount = textResult.WordCount,
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow,
+
+            Quiz = textResult.Quiz?.Select(q => new TextQuizItem
+            {
+                Question = q.Question,
+                Options = q.Options,
+                CorrectAnswer = q.CorrectAnswer
+            }).ToList() ?? new List<TextQuizItem>()
         };
 
         var textRequest = new GeneratedTextRequest
@@ -82,7 +89,13 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
             WordCount = textResult.WordCount,
             Level = request.Level,
             Topic = request.Topic,
-            Keywords = textResult.KeywordsUsed
+            Keywords = textResult.KeywordsUsed,
+            Quiz = generatedText.Quiz.Select(q => new QuizItemDto
+            {
+                Question = q.Question,
+                Options = q.Options,
+                CorrectAnswer = q.CorrectAnswer
+            }).ToList()
         };
 
     }

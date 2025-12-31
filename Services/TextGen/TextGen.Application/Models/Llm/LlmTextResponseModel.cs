@@ -6,4 +6,11 @@ public class LlmTextResponseModel
     public string Content { get; set; } = null!;
     public int WordCount { get; set; }
     public List<string> KeywordsUsed { get; set; } = new List<string>();
+    public List<LlmQuizItem> Quiz { get; set; }
+}
+public class LlmQuizItem
+{
+    public string Question { get; set; }
+    public List<string> Options { get; set; }
+    public int CorrectAnswer { get; set; } // 0, 1, 2, 3
 }

@@ -6,22 +6,6 @@ using TextGen.Application.Services;
 
 namespace TextGen.Infrastructure.Services;
 
-// LLM'den gelen JSON'u temsil eder. 
-public class LlmApiContentPart
-{
-    [JsonPropertyName("title")]
-    public string Title { get; set; } = string.Empty;
-
-    [JsonPropertyName("content")]
-    public string Content { get; set; } = string.Empty;
-
-    [JsonPropertyName("wordCount")]
-    public int WordCount { get; set; }
-
-    // KeywordsUsed alanı, bu örnekte kullanılmasa da LLM'den gelecektir.
-    [JsonPropertyName("keywordsUsed")]
-    public List<string> KeywordsUsed { get; set; } = new List<string>();
-}
 public class LlmClient : ILlmClient
 {
     private readonly HttpClient _httpClient;
@@ -75,11 +59,27 @@ public class LlmClient : ILlmClient
 
         textContent = CleanJsonString(textContent);
 
-        var result = JsonSerializer.Deserialize<T>(textContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            AllowTrailingCommas = true,            // <--- Trailing comma hatasını çözer
+            ReadCommentHandling = JsonCommentHandling.Skip // <--- Yorum satırlarını yok sayar
+        };
 
-        if (result == null) throw new Exception("LLM yanıtı modele dönüştürülemedi.");
+        try
+        {
+            // 2. Deserialize işlemini bu ayarlarla yapıyoruz
+            var result = JsonSerializer.Deserialize<T>(textContent, options);
 
-        return result;
+            if (result == null) throw new Exception("LLM yanıtı modele dönüştürülemedi.");
+
+            return result;
+        }
+        catch (JsonException ex)
+        {
+            // 3. Hata alırsan gelen bozuk JSON'ı exception mesajına ekliyoruz ki görebilesin
+            throw new InvalidOperationException($"JSON Parse Hatası oluştu. Gelen ham veri: {textContent}", ex);
+        }
     }
 
     // Veri ```json ile başlıyorsa temizle

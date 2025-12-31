@@ -23,6 +23,11 @@ public class TextGenDbContext : DbContext, ITextGenDbContext
             entity.Property(x => x.Title).HasMaxLength(200).IsRequired();
             entity.Property(x => x.Content).IsRequired();
 
+            entity.OwnsMany(x => x.Quiz, builder =>
+            {
+                builder.ToJson();
+            });
+
             // GeneratedText -> GeneratedTextRequest (1-e-1 İlişki)
             entity.HasOne(x => x.Request)
                   .WithOne(x => x.GeneratedText)
