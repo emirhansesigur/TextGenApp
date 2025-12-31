@@ -20,6 +20,7 @@ public class GetUserTextQueryHandler(ITextGenDbContext _dbContext) : IRequestHan
         }
         return new UserTextResponseModel
         {
+            Id = generatedText.Id,
             Title = generatedText.Title,
             Content = generatedText.Content,
             WordCount = generatedText.WordCount,

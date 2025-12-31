@@ -33,7 +33,7 @@ public class ContentController : ApiControllerBase
         return Ok(result);
     }
     
-    [HttpDelete("{id}")]
+    [HttpDelete("userText/{id:guid}")]
     public async Task<IActionResult> DeleteUserText(Guid id)
     {
         var command = new DeleteUserTextCommand { Id = id };

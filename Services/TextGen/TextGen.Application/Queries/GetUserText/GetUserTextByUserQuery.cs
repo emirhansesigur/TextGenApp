@@ -18,6 +18,7 @@ public class GetUserTextByUserQueryHandler(ITextGenDbContext _dbContext) : IRequ
             .Where(gt => gt.UserId == userIdFromAuth)
             .Select(gt => new UserTextResponseModel
             {
+                Id = gt.Id,
                 Title = gt.Title,
                 Content = gt.Content,
                 WordCount = gt.WordCount

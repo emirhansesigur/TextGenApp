@@ -21,6 +21,7 @@ public class GetDailyTopicsQueryHandler(ITextGenDbContext _dbContext) : IRequest
 
         return topics.Select(dt => new DailyTopicResponseModel
         {
+            Id = dt.Id,
             Title = dt.Title,
             Category = dt.Category,
             Content = dt.Content,
