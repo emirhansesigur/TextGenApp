@@ -2,6 +2,7 @@
 using TextGen.Application.Commands.GenerateText;
 using TextGen.Application.Queries.GetDailyTopics;
 using TextGen.Application.Queries.GetGeneratedText;
+using TextGen.Application.Queries.GetPublicText;
 
 namespace TextGen.API.Controllers;
 
@@ -29,6 +30,14 @@ public class ContentController : ApiControllerBase
     public async Task<IActionResult> GetUserTextsByUser()
     {
         var query = new GetUserTextByUserQuery();
+        var result = await Mediator.Send(query);
+        return Ok(result);
+    }
+
+    [HttpGet("publicText/{id:guid}")]
+    public async Task<IActionResult> GetGetPublicTextById(Guid id)
+    {
+        var query = new GetPublicTextQuery { Id = id};
         var result = await Mediator.Send(query);
         return Ok(result);
     }

@@ -15,6 +15,7 @@ public class TextGenDbContext : DbContext, ITextGenDbContext
     public DbSet<GeneratedTextRequest> GeneratedTextRequests => Set<GeneratedTextRequest>();
     public DbSet<GeneratedTextKeyword> GeneratedTextKeywords => Set<GeneratedTextKeyword>();
     public DbSet<SuggestedTopic> SuggestedTopics => Set<SuggestedTopic>();
+    public DbSet<PublicText> PublicTexts => Set<PublicText>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<GeneratedText>(entity =>
@@ -60,6 +61,22 @@ public class TextGenDbContext : DbContext, ITextGenDbContext
             entity.Property(x => x.Title).IsRequired();
             entity.Property(x => x.Content).IsRequired();
             entity.Property(x => x.Category).IsRequired();
+        });
+
+        modelBuilder.Entity<PublicText>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.Title).IsRequired();
+            entity.Property(x => x.Category).IsRequired();
+            entity.Property(x => x.TextLevel).IsRequired();
+            entity.Property(x => x.Content).IsRequired();
+            entity.Property(x => x.Summary).IsRequired();
+            entity.Property(x=> x.WordCount).IsRequired();
+            entity.Property(x=> x.EstimatedReadingTimeMinutes).IsRequired();
+            entity.OwnsMany(x => x.Quiz, builder =>
+            {
+                builder.ToJson();
+            });
         });
 
         base.OnModelCreating(modelBuilder);
