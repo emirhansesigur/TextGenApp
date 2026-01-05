@@ -3,6 +3,9 @@
 public class GenerateTextResponseModel
 {
     public string Title { get; set; } = null!;
+    public string Category { get; set; } = null!;
+    public string Summary { get; set; } = null!;
+    public int EstimatedReadingTimeMinutes { get; set; }
     public string Content { get; set; } = null!;
     public string Topic { get; set; } = null!;
     public string Level { get; set; } = null!;
@@ -14,5 +17,4 @@ public class QuizItemDto
 {
     public string Question { get; set; }
     public List<string> Options { get; set; }
-    public int CorrectAnswer { get; set; }
 }

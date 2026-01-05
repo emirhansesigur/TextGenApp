@@ -24,6 +24,14 @@ public class GetUserTextQueryHandler(ITextGenDbContext _dbContext) : IRequestHan
             Title = generatedText.Title,
             Content = generatedText.Content,
             WordCount = generatedText.WordCount,
+            Category = generatedText.Category,
+            Summary = generatedText.Summary,
+            EstimatedReadingTimeMinutes = generatedText.EstimatedReadingTimeMinutes,
+            Quiz = generatedText.Quiz.Select(q => new UserTextQuizItemModel
+            {
+                Question = q.Question,
+                Options = q.Options
+            }).ToList()
         };
     }
 }

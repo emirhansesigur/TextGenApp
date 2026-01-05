@@ -50,6 +50,9 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
             Id = Guid.NewGuid(),
             UserId = userIdFromAuth,
             Title = textResult.Title,
+            Category = textResult.Category,
+            Summary = textResult.Summary,
+            EstimatedReadingTimeMinutes = textResult.EstimatedReadingTimeMinutes,
             Content = textResult.Content,
             WordCount = textResult.WordCount,
             CreatedAt = DateTime.UtcNow,
@@ -85,6 +88,9 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
         return new GenerateTextResponseModel
         {
             Title = textResult.Title,
+            Category = textResult.Category,
+            Summary = textResult.Summary,
+            EstimatedReadingTimeMinutes = textResult.EstimatedReadingTimeMinutes,
             Content = textResult.Content,
             WordCount = textResult.WordCount,
             Level = request.Level,
@@ -93,8 +99,7 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
             Quiz = generatedText.Quiz.Select(q => new QuizItemDto
             {
                 Question = q.Question,
-                Options = q.Options,
-                CorrectAnswer = q.CorrectAnswer
+                Options = q.Options
             }).ToList()
         };
 

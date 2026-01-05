@@ -21,6 +21,9 @@ public class TextGenDbContext : DbContext, ITextGenDbContext
         modelBuilder.Entity<GeneratedText>(entity =>
         {
             entity.HasKey(x => x.Id);
+            entity.Property(x => x.Category).HasMaxLength(100).IsRequired();
+            entity.Property(x => x.Summary).IsRequired();
+            entity.Property(x => x.EstimatedReadingTimeMinutes).IsRequired();
             entity.Property(x => x.Title).HasMaxLength(200).IsRequired();
             entity.Property(x => x.Content).IsRequired();
 
