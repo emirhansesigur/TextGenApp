@@ -35,9 +35,17 @@ public class ContentController : ApiControllerBase
     }
 
     [HttpGet("publicText/{id:guid}")]
-    public async Task<IActionResult> GetGetPublicTextById(Guid id)
+    public async Task<IActionResult> GetPublicTextById(Guid id)
     {
         var query = new GetPublicTextQuery { Id = id};
+        var result = await Mediator.Send(query);
+        return Ok(result);
+    }
+
+    [HttpGet("publicTexts")]
+    public async Task<IActionResult> GetPublicTexts()
+    {
+        var query = new GetPublicTextsQuery();
         var result = await Mediator.Send(query);
         return Ok(result);
     }

@@ -23,7 +23,9 @@ public class GetPublicTextQueryHandler(ITextGenDbContext _dbContext) : IRequestH
                         Category = x.Category,
                         TextLevel = x.TextLevel,
                         Content = x.Content,
+                        Summary = x.Summary,
                         WordCount = x.WordCount,
+                        EstimatedReadingTimeMinutes = x.EstimatedReadingTimeMinutes,
                         Quiz = x.Quiz.Select(q => new PublicTextQuizItemModel
                         {
                             Question = q.Question,
