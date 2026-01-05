@@ -1,4 +1,29 @@
 services:
+  reverse-proxy:
+    image: nginx:latest
+    container_name: my-nginx-proxy
+    ports:
+      - "80:80" # Canlı ortamın tek giriş kapısı
+    volumes:
+      # Proje klasöründeki nginx/nginx.conf dosyasını içeri atar
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - ocelot.apigateway
+    networks:
+      - textgen-network
+
+  ocelot.apigateway:
+    container_name: ocelot-gateway
+    image: ${DOCKER_REGISTRY-}ocelotapigateway
+    build:
+      context: .
+      dockerfile: ApiGateway/Ocelot.ApiGateway/Dockerfile
+    depends_on:
+      - textgen.api
+      - vocabulary.api
+    networks:
+      - textgen-network
+
   textgen.api:
     container_name: textgen-service
     image: ${DOCKER_REGISTRY-}textgenapi
@@ -17,17 +42,6 @@ services:
     networks:
       - textgen-network
 
-  ocelot.apigateway:
-    container_name: ocelot-gateway
-    image: ${DOCKER_REGISTRY-}ocelotapigateway
-    build:
-      context: .
-      dockerfile: ApiGateway/Ocelot.ApiGateway/Dockerfile
-    depends_on:
-      - textgen.api
-      - vocabulary.api
-    networks:
-      - textgen-network
         
 networks:
   textgen-network:

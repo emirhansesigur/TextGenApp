@@ -30,10 +30,23 @@
           "Host": "textgen-service",
           "Port": 8080
         }
-      ]
+      ],
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "1s", // Ölçüm yapılacak zaman dilimi (1s, 1m, 1h, 1d)
+        "PeriodTimespan": 5, // Sınıra takılan kullanıcının kaç saniye bloklanacağı
+        "Limit": 2, // Bu süre zarfında (1s) atılabilecek max istek sayısı
+        "ClientWhitelist": [] // Sınırdan muaf tutulacak istemciler (örn: admin IP)
+      }
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5000" // Dış dünya buraya 5000'den gelecek
+    "BaseUrl": "http://localhost:5000", // Dış dünya buraya 5000'den gelecek
+
+    "RateLimitOptions": {
+      "DisableRateLimitHeaders": false, // Kullanıcıya 'X-Rate-Limit' header'larını gönderir (kalan hak vb.)
+      "QuotaExceededMessage": "Çok hızlı istek gönderiyorsunuz. Lütfen biraz bekleyin.",
+      "HttpStatusCode": 429 // Too Many Requests kodu
+    }
   }
 }

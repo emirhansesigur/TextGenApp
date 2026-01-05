@@ -12,7 +12,12 @@
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>
+    <None Include="docker-compose.prod.yml" />
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
+    <None Include="nginx\nginx.conf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Nginx\" />
   </ItemGroup>
 </Project>

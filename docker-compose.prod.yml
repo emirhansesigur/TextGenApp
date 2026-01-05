@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  reverse-proxy:
+    image: nginx:latest
+    container_name: my-nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - textgen-network
+
+  ocelot.apigateway:
+    image: emirhan10/ocelot-gateway:v1
+    container_name: ocelot-gateway
+    networks:
+      - textgen-network
+
+  textgen.api:
+    image: emirhan10/textgen-service:v1
+    container_name: textgen-service
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - DB_CONNECTION_STRING=${TEXTGEN_DB_CONNECTION}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - DOTNET_gcServer=0
+    networks:
+      - textgen-network
+   
+  vocabulary.api:
+    image: emirhan10/vocabulary-service:v1
+    container_name: vocabulary-service
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - DB_CONNECTION_STRING=${VOCABULARY_DB_CONNECTION}
+      - DOTNET_gcServer=0
+    networks:
+      - textgen-network
+
+networks:
+  textgen-network:
+    driver: bridge
