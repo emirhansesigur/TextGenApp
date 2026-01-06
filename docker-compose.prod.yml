@@ -24,7 +24,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - DB_CONNECTION_STRING=${TEXTGEN_DB_CONNECTION}
       - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - VOCABULARY_SERVICE_URL=${VOCABULARY_SERVICE_URL}
       - DOTNET_gcServer=0
+      - ASPNETCORE_URLS=http://+:8080
     networks:
       - textgen-network
    
@@ -35,6 +37,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - DB_CONNECTION_STRING=${VOCABULARY_DB_CONNECTION}
       - DOTNET_gcServer=0
+      - ASPNETCORE_URLS=http://+:8080
     networks:
       - textgen-network
 

@@ -29,6 +29,7 @@ public class GetUserTextQueryHandler(ITextGenDbContext _dbContext) : IRequestHan
             EstimatedReadingTimeMinutes = generatedText.EstimatedReadingTimeMinutes,
             Quiz = generatedText.Quiz.Select(q => new UserTextQuizItemModel
             {
+                Id = q.Id,
                 Question = q.Question,
                 Options = q.Options
             }).ToList()

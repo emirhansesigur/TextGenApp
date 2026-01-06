@@ -28,6 +28,7 @@ public class GetPublicTextQueryHandler(ITextGenDbContext _dbContext) : IRequestH
                         EstimatedReadingTimeMinutes = x.EstimatedReadingTimeMinutes,
                         Quiz = x.Quiz.Select(q => new PublicTextQuizItemModel
                         {
+                            Id = q.Id,
                             Question = q.Question,
                             Options = q.Options
                         }).ToList()

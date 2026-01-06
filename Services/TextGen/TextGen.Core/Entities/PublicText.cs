@@ -13,6 +13,7 @@ public class PublicText : BaseEntity
 }
 public class PublicTextQuizItem
 {
+    public Guid Id { get; set; }
     public string Question { get; set; } = string.Empty;
     public List<string> Options { get; set; } = new();
     public int CorrectAnswer { get; set; } // Index: 0, 1, 2, 3 

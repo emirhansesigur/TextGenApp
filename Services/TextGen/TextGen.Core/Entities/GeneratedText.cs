@@ -14,6 +14,7 @@ public class GeneratedText : BaseEntity
 }
 public class TextQuizItem
 {
+    public Guid Id { get; set; } = Guid.NewGuid();
     public string Question { get; set; } = string.Empty;
     public List<string> Options { get; set; } = new();
     public int CorrectAnswer { get; set; } // Index: 0, 1, 2, 3 

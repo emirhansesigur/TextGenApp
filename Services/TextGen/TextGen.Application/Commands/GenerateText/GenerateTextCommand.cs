@@ -98,6 +98,7 @@ public class GenerateTextCommandHandler(ITextGenDbContext _dbContext, IVocabular
             Keywords = textResult.KeywordsUsed,
             Quiz = generatedText.Quiz.Select(q => new QuizItemDto
             {
+                Id = q.Id,
                 Question = q.Question,
                 Options = q.Options
             }).ToList()
