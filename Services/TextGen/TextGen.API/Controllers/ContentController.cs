@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TextGen.Application.Commands.GenerateText;
+using TextGen.Application.Commands.SubmitQuiz;
 using TextGen.Application.Queries.GetDailyTopics;
 using TextGen.Application.Queries.GetGeneratedText;
 using TextGen.Application.Queries.GetPublicText;
@@ -62,5 +63,12 @@ public class ContentController : ApiControllerBase
         }
 
         return NoContent();
+    }
+
+    [HttpPost("submitQuiz")]
+    public async Task<IActionResult> SubmitQuiz([FromBody] SubmitQuizCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return Ok(result);
     }
 }
