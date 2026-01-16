@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Auth.Application.Interfaces;
+﻿using Auth.Application.Interfaces;
+using Auth.Application.Services;
 using Auth.Infrastructure.Data;
+using Auth.Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Auth.Infrastructure.DependencyInjection;
@@ -17,7 +19,8 @@ public static class DependencyInjection
         services.AddScoped<IAuthDbContext>(provider =>
             provider.GetRequiredService<AuthDbContext>());
 
+        services.AddScoped<IAuthService, AuthService>();
+
         return services;
-        throw new NotImplementedException();
     }
 }

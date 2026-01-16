@@ -6,12 +6,14 @@ USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 
-
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Services/Auth/Auth.API/Auth.API.csproj", "Services/Auth/Auth.API/"]
+COPY ["Services/Auth/Auth.Application/Auth.Application.csproj", "Services/Auth/Auth.Application/"]
+COPY ["Services/Auth/Auth.Core/Auth.Core.csproj", "Services/Auth/Auth.Core/"]
+COPY ["Services/Auth/Auth.Infrastructure/Auth.Infrastructure.csproj", "Services/Auth/Auth.Infrastructure/"]
 RUN dotnet restore "./Services/Auth/Auth.API/Auth.API.csproj"
 COPY . .
 WORKDIR "/src/Services/Auth/Auth.API"
