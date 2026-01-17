@@ -42,7 +42,16 @@ services:
     networks:
       - textgen-network
 
-        
+  auth.api:
+    container_name: auth-service
+    image: ${DOCKER_REGISTRY-}authapi
+    build:
+      context: .
+      dockerfile: Services/Auth/Auth.API/Dockerfile
+    networks:
+      - textgen-network
+
+      
 networks:
   textgen-network:
     driver: bridge

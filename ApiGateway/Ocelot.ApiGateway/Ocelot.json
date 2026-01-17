@@ -38,6 +38,21 @@
         "Limit": 2, // Bu süre zarfında (1s) atılabilecek max istek sayısı
         "ClientWhitelist": [] // Sınırdan muaf tutulacak istemciler (örn: admin IP)
       }
+    },
+    {
+      // --- 3. AUTH SERVİSİ ---
+      "UpstreamPathTemplate": "/gateway/auth/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+
+      // İsteği asıl servisin olduğu "/api/..." adresine yönlendirir
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "auth-service",
+          "Port": 8080
+        }
+      ]
     }
   ],
   "GlobalConfiguration": {

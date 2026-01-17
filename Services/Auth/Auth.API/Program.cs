@@ -1,5 +1,11 @@
+using DotNetEnv;
 using Auth.Application.DependencyInjection;
 using Auth.Infrastructure.DependencyInjection;
+
+if (File.Exists(".env"))
+{
+    Env.Load();
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
