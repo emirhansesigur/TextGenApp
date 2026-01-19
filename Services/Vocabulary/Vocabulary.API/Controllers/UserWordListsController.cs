@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Vocabulary.Application.Commands.UserWordLists;
 using Vocabulary.Application.Queries.UserWordLists;
 
@@ -8,6 +9,7 @@ namespace Vocabulary.API.Controllers;
 [Route("api/[controller]")]
 public class UserWordListsController : ApiControllerBase
 {
+    [Authorize(Roles = "User")]
     [HttpPost]
     public async Task<IActionResult> CreateUserWordList([FromBody] CreateUserWordListCommand command)
     {
@@ -15,7 +17,7 @@ public class UserWordListsController : ApiControllerBase
         return CreatedAtAction(nameof(GetUserWordList), new { id = result.Id }, result);
     }
 
-    // Dıştan istek gelmesini engelle
+    [Authorize(Roles = "User")]
     [HttpPost("Generated")]
     public async Task<IActionResult> CreateGeneratedWordList([FromBody] CreateGeneratedWordListCommand command)
     {
@@ -23,6 +25,7 @@ public class UserWordListsController : ApiControllerBase
         return Ok(result);
     }
 
+    [Authorize(Roles = "User")]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserWordList(Guid id)
     {
@@ -31,6 +34,7 @@ public class UserWordListsController : ApiControllerBase
         return Ok(result);
     }
 
+    [Authorize(Roles = "User")]
     [HttpGet("ByUser")]
     public async Task<IActionResult> GetUserWordListsByUser()
     {
@@ -39,6 +43,7 @@ public class UserWordListsController : ApiControllerBase
         return Ok(result);
     }
 
+    [Authorize(Roles = "User")]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateUserWordList(Guid id, [FromBody] UpdateUserWordListCommand command)
     {
@@ -48,6 +53,7 @@ public class UserWordListsController : ApiControllerBase
         return Ok(result);
     }
 
+    [Authorize(Roles = "User")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUserWordList(Guid id)
     {

@@ -1,6 +1,6 @@
 ﻿using Auth.Application.Interfaces;
 using Auth.Application.Models;
-using Auth.Application.Services; // IAuthService eklendi
+using Auth.Application.Services;
 using Auth.Core.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

@@ -36,7 +36,7 @@ public class AuthService(IConfiguration _configuration) : IAuthService
 
         // appsettings.json'dan gizli anahtarı alıyoruz
         // Not: Gerçek projede bu key en az 64 karakter olmalı!
-        var key = Encoding.ASCII.GetBytes(_configuration["JwtSettings:SecretKey"]!);
+        var key = Encoding.ASCII.GetBytes(_configuration["JwtSecretKey"]!);
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {

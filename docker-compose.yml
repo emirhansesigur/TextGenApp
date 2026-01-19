@@ -51,7 +51,6 @@ services:
     networks:
       - textgen-network
 
-      
 networks:
   textgen-network:
     driver: bridge

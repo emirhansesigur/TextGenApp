@@ -41,6 +41,18 @@ services:
     networks:
       - textgen-network
 
+  # auth.api:
+  #   image: emirhan10/auth-service:v1
+  #   container_name: auth-service
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Production
+  #     - DB_CONNECTION_STRING=${AUTH_DB_CONNECTION}
+  #     - JwtSecretKey=${JwtSecretKey}
+  #     - DOTNET_gcServer=0
+  #     - ASPNETCORE_URLS=http://+:8080
+  #   networks:
+  #     - textgen-network
+
 networks:
   textgen-network:
     driver: bridge

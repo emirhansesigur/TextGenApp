@@ -10,31 +10,20 @@ if (File.Exists(".env"))
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+var jwtSecretKey = Environment.GetEnvironmentVariable("JwtSecretKey");
 
-if (string.IsNullOrEmpty(connectionString))
-{
-    throw new Exception("Environment variable 'DB_CONNECTION_STRING' okunamadı");
-} //Console.WriteLine($"Connection String: {connectionString}"); // Test için
+if (string.IsNullOrEmpty(connectionString)) throw new Exception("DB_CONNECTION_STRING eksik!");
+if (string.IsNullOrEmpty(jwtSecretKey)) throw new Exception("JWT_SECRET_KEY eksik!");
 
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-
-builder.Services.AddInfrastructureServices(connectionString);
+builder.Services.AddInfrastructureServices(connectionString, jwtSecretKey);
 builder.Services.AddApplicationServices();
-
 
 var app = builder.Build();
 
-
-//app.UseSwagger();
-//app.UseSwaggerUI(options =>
-//{
-//    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Vocabulary API v1");
-//});
-
-app.UseAuthorization();
+app.UseAuthentication(); // Token geçerli mi?
+app.UseAuthorization();  // Yetkisi var mı?
 
 app.MapControllers();
 
