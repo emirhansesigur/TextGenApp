@@ -1,4 +1,5 @@
 using Auth.Application.Commands.Login;
+using Auth.Application.Commands.RefreshToken;
 using Auth.Application.Commands.Register;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,13 @@ public class AuthController : ApiControllerBase
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return Ok(result);
+    }
+
+    [HttpPost("refreshToken")]
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenCommand command)
     {
         var result = await Mediator.Send(command);
         return Ok(result);

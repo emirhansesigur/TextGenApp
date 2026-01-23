@@ -1,4 +1,5 @@
 ﻿using Auth.Core.Entities;
+using System.Security.Claims;
 
 namespace Auth.Application.Services;
 
@@ -13,4 +14,5 @@ public interface IAuthService
     // Refresh token üretmek için
     string GenerateRefreshToken();
     bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt);
+    ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token);
 }
